@@ -1,0 +1,72 @@
+﻿<canvas id="cakeCanvas" width="800" height="500"></canvas>
+<script type="text/javascript">
+    class DrawCake
+    {
+        constructor() {
+            this.c = document.getElementById("cakeCanvas");
+            this.ctx = this.c.getContext("2d");
+        }
+
+        drawSide(x, y, width, height, colorSide, colorTop) {
+            width = x + width;
+            height = y + height;
+
+            this.ctx.beginPath();
+            this.ctx.moveTo(x, y);
+            this.ctx.lineTo(x, height);
+            this.ctx.bezierCurveTo(x, height + height / 8, width, height + height / 8, width, height);
+            this.ctx.lineTo(width, y);
+            this.ctx.bezierCurveTo(width, y + y / 8, x, y + y / 8, x, y);
+            this.ctx.fillStyle = colorSide;
+            this.ctx.strokeStyle = "#f4f3db";
+            this.ctx.fill();
+            this.ctx.stroke();
+            this.ctx.closePath();
+
+            this.drawTop(x, y, width, height, colorTop);
+        }
+
+        drawTop(x, y, width, height, color) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(x, y);
+            this.ctx.bezierCurveTo(x, y + y / 8, width, y + y / 8, width, y);
+            this.ctx.bezierCurveTo(width, y - y / 8, x, y - y / 8, x, y);
+            this.ctx.fillStyle = color;
+            this.ctx.fill();
+            this.ctx.stroke();
+            this.ctx.closePath();
+        }
+
+        drawFilling(x, y, width, height, color) {
+            width = x + width;
+            height = y + height;
+
+            this.ctx.beginPath();
+            this.ctx.moveTo(x, y + y / 6);
+            this.ctx.bezierCurveTo(x, y + y / 6 + y / 8, width, y + y / 6 + y / 8, width, y + y / 6);
+            this.ctx.lineWidth = 4;
+            this.ctx.strokeStyle = color;
+            this.ctx.stroke();
+            this.ctx.lineWidth = 1;
+            this.ctx.closePath();
+        }
+
+        drawLayers(x, y, width, height, layers, colorSide, colorTop, fillColor = "") {
+
+            for (var i = 0; i < layers; i++) {
+                this.drawSide(
+                    x + width / 8 * i,
+                    y - height * i,
+                    width - width / 4 * i,
+                    height,
+                    colorSide, colorTop);
+
+                if (fillColor != "") {
+                    this.drawFilling(x + width / 8 * i, y - height * i, width - width / 4 * i, height, fillColor)
+                }
+            }
+        }
+    }
+    var drawCake = new DrawCake();
+    drawCake.drawLayers(200, 350, 300, 100, 3, "#fffdd0", "#fffdd0", "#DC0202");
+</script>
