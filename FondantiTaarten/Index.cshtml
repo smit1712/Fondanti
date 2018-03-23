@@ -6,13 +6,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title></title>
+    <link rel="stylesheet" href="~/Index.css" />
 </head>
 <body>
-
     <!-- Render Shared Header-->
     @RenderPage("~/_Shared/_Header.cshtml")
-    <p>Hallo jongens</p>
+    <div class="row">
+        <div class="col-md-7">
 
+        </div>
+        <div class="col-md-5">
+            <div class="keuze-scherm">
+                <div class="text">
+                    <h1>Keuze</h1>
+                </div>
+
+                <form>
+                    <div class="form-group">
+                        <select class="form-control" id="Grootte">
+                            <option>Kies de grootte van uw taart</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+               </form>
+            </div>
+        </div>
+    </div>
+    
+   
 </body>
 </html>
