@@ -1,7 +1,17 @@
 ﻿@using WebMatrix.WebData
-@{
-
+@{ 
 }
+
+<script>
+    function thema() {
+        var val = document.getElementById('Thema').value;
+        if (val == 'Anders') {
+            ("InputAnders").show(); 
+        } else {
+            ("InputAnders").hide(); 
+        }
+    }
+</script>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,14 +34,79 @@
                 <form>
                     <div class="form-group">
                         <select class="form-control" id="Grootte">
-                            <option>Kies de grootte van uw taart</option>
+                            <option disabled selected>Voer het aantal personen in voor de taart</option>
+                            <option>1 < 15</option>
+                            <option>15 < 30</option>
+                            <option>30 < 45 </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="Thema" onchange="thema()">
+                            <option disabled selected>Kies uw thema</option>
+                            <option>Verjaardag volwassene</option>
+                            <option>Bruiloft</option>
+                            <option>Verjaardag kind</option>
+                            <option value="Anders">Anders, namelijk...</option>
+                        </select>
+                        <input type="text" class="form-control" id="IntputAnders" placeholder="Anders, namelijk..." value="@Request.Form["Anders"]"/>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="Soort">
+                            <option disabled selected>Kies het soort cake voor de taart</option>
+                            <option>Biscuit Deeg</option>
+                            <option>Chocolate</option>
+                            <option>Red velvet</option>
+                        </select>
+                    </div><div class="form-group">
+                        <select class="form-control" id="Bekleding">
+                            <option disabled selected>Kies de bekleding voor de taart</option>
+                            <option>Fondant</option>
+                            <option>Marsepein</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="Vulling">
+                            <option disabled selected>Kies uw vulling</option>
+                            <option>Kindervulling (vruchtencompote en room)</option>
+                            <option>Gele room met Oreo vulling</option>
+                            <option>Champagne Room met verse frambozen</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="Stijl">
+                            <option disabled selected>Voer de stijl van uw taart in</option>
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
                             <option>4</option>
                         </select>
                     </div>
-               </form>
+                    <div class="form-group">
+                        <select class="form-control" id="Topping">
+                            <option disabled selected>Topping</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="Decoratie">
+                            <option disabled selected>Kies het niveau van decoratie</option>
+                            <option>Eenvoudig</option>
+                            <option>Gemiddeld</option>
+                            <option>Uitgebreid</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="Allergieen">
+                            <option disabled selected>Kies uw eventuele allergieen</option>
+                            <option>Geen</option>
+                            <option>Gluten Vrij </option>
+                            <option>Anders namelijk...</option>
+                        </select>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
