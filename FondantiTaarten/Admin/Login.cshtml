@@ -1,14 +1,18 @@
-﻿@{
-    WebSecurity.InitializeDatabaseConnection("FondantiDatabase", "Users", "Id", "User", true);
+﻿@using WebMatrix.WebData;
+@{ Database db2 = Database.Open("FondantiDataBase");
+    if (WebSecurity.Initialized == false)
+    {
+        WebSecurity.InitializeDatabaseConnection("FondantiDataBase", "Users", "UserId", "UserName", true);
+    }
     var rememberMe = false; if (IsPost)
     {
         AntiForgery.Validate();
-        var UserName = Request["Admin"];
+        var UserName = Request["User"];
         var Password = Request["Password"];
         rememberMe = Request["rememberMe"].AsBool();
-        Validation.RequireFields("UserName", "Password");
+        Validation.RequireFields("Userame", "Password");
         Validation.Add("Password", Validator.StringLength(16, 6));
-        Validation.Add("UserName", Validator.Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", "Your username should be an email address"));
+        Validation.Add("Username", Validator.Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", "Your username should be an email address"));
         var returnurl = Request["returnurl"];
         if (returnurl.IsEmpty())
         {
@@ -31,9 +35,9 @@
             @Html.ValidationSummary(true)
 
             <div>
-                <label>UserName</label>
-                <input type="text" name="UserName" />
-                @Html.ValidationMessage("UserName")
+                <label>Username</label>
+                <input type="text" name="Username" />
+                @Html.ValidationMessage("Username")
             </div>
 
             <div>
