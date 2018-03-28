@@ -1,0 +1,56 @@
+﻿@{
+    WebSecurity.InitializeDatabaseConnection("FondantiDatabase", "Users", "Id", "User", true);
+    var rememberMe = false; if (IsPost)
+    {
+        AntiForgery.Validate();
+        var UserName = Request["Admin"];
+        var Password = Request["Password"];
+        rememberMe = Request["rememberMe"].AsBool();
+        Validation.RequireFields("UserName", "Password");
+        Validation.Add("Password", Validator.StringLength(16, 6));
+        Validation.Add("UserName", Validator.Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", "Your username should be an email address"));
+        var returnurl = Request["returnurl"];
+        if (returnurl.IsEmpty())
+        {
+            returnurl = Href("~/Index.cshtml");
+        }
+
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <form method="post">
+        @AntiForgery.GetHtml()
+        <fieldset>
+            <legend>Login</legend>
+            @Html.ValidationSummary(true)
+
+            <div>
+                <label>UserName</label>
+                <input type="text" name="UserName" />
+                @Html.ValidationMessage("UserName")
+            </div>
+
+            <div>
+                <label>Password</label>
+                <input type="password" name="password" />
+                @Html.ValidationMessage("Password")
+            </div>
+
+            <div>
+                <label>Remember Me?</label>
+                <input type="checkbox" name="rememberMe" value="true" checked="@rememberMe" />
+            </div>
+
+            <input type="submit" />
+        </fieldset>
+    </form>
+
+
+</body>
+</html>
