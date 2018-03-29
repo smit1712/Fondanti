@@ -1,0 +1,45 @@
+﻿@using WebMatrix.WebData
+
+@{
+    
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="~/AdminPage.css" />
+    <!-- Render Shared Header-->
+    @RenderPage("~/_Shared/_Header.cshtml")
+</head>
+<body>
+    <!-- Render Shared Navbar-->
+    @RenderPage("~/_Shared/_Navbar.cshtml")
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-7 col-md-7 col-lg-7">
+                <div class="kop">
+                    <h2>
+                        Prijs type cake p.p.
+                    </h2>
+                </div>
+                <div class="row">
+                    <div class="voorkop">
+                        <p>Chocolate</p>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">€</span>
+                        <input type="text" class="form-control" aria-label="Amount (to the nearest euro)">
+                        <span class="input-group-addon">.00</span>
+                    </div>       
+                </div>
+                
+
+            </div>
+            <div class="col-sm-5 col-md-5 col-lg-5">
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
