@@ -2,16 +2,16 @@
 @{ 
 }
 
-<script>
-    function thema() {
-        var val = document.getElementById('Thema').value;
-        if (val == 'Anders') {
-            ("InputAnders").show(); 
+ <script>
+    function thema() {        
+        var val = document.getElementById("Thema").value;        
+        if (val == "Anders") {
+            document.getElementById("InputAnders").style.visibility='visible'(); 
         } else {
-            ("InputAnders").hide(); 
+            document.getElementById("InputAnders").style.visibility='hidden'();  
         }
     }
-</script>
+</script> 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -43,12 +43,14 @@
                     <div class="form-group">
                         <select class="form-control" id="Thema" onchange="thema()">
                             <option disabled selected>Kies uw thema</option>
-                            <option>Verjaardag volwassene</option>
-                            <option>Bruiloft</option>
-                            <option>Verjaardag kind</option>
+                            <option value="1">Verjaardag volwassene</option>
+                            <option value="1">Bruiloft</option>
+                            <option value="1">Verjaardag kind</option>
                             <option value="Anders">Anders, namelijk...</option>
                         </select>
-                        <input type="text" class="form-control" id="IntputAnders" placeholder="Anders, namelijk..." value="@Request.Form["Anders"]"/>
+                        <input type="text" class="form-control" id="InputAnders" placeholder="Anders, namelijk..." style="visibility:hidden" value="@Request.Form["Anders"]" />
+
+                        
                     </div>
                     <div class="form-group">
                         <select class="form-control" id="Soort">
@@ -110,7 +112,6 @@
             </div>
         </div>
     </div>
-    
-   
+
 </body>
 </html>
