@@ -1,10 +1,12 @@
 ﻿@using WebMatrix.WebData
+
 @{ 
 }
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <link rel="stylesheet" href="~/Index.css" />
 </head>
 <body>
@@ -39,15 +41,17 @@
                                 <option value="Anders">Anders, namelijk...</option>
                             </select>
                             <div id="inputThema" style="display: none">
-                                <input type="text" class="form-control" placeholder="Voer uw gewenste thema in" value="@Request.Form["inputThemaForm"]"  />
+                                <input type="text" class="form-control" placeholder="Voer uw gewenste thema in" value="@Request.Form["inputThemaForm"]" />
                             </div>
                             <script>
                                 function mythema() {
                                     var x = document.getElementById("Thema").value;
                                     if (x == "Anders") {
-                                        inputThema.style.display = "block"}
+                                        inputThema.style.display = "block"
+                                    }
                                     else {
-                                        inputThema.style.display = "none"}
+                                        inputThema.style.display = "none"
+                                    }
                                 }
                             </script>
                         </div>
@@ -103,6 +107,36 @@
                                 }
                             </script>
                         </div>
+
+                        <!--<label class="custom-file">
+                            <input type="file" id="file" class="custom-file-input">
+                            <span class="custom-file-control"></span>
+                        </label> -->
+
+                        Datum van aflevering:
+
+                        <div class="container">
+                            <div class="row">
+                                <div>
+                                    <div class="form-group">
+                                        <div class='input-group date' id='datetimepicker2'>
+                                            <input type='date' class="form-control" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                    $(function () {
+                                        $('#datetimepicker2').datetimepicker({
+                                            locale: 'nl'
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </div>
+
                     </form>
                 </div>
             </div>
