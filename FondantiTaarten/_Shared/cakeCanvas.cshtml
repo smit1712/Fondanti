@@ -1,7 +1,6 @@
 ﻿<canvas id="cakeCanvas" width="800" height="500"></canvas>
 <script type="text/javascript">
-    class DrawCake
-    {
+    class DrawCake {
         constructor() {
             this.c = document.getElementById("cakeCanvas");
             this.ctx = this.c.getContext("2d");
@@ -18,7 +17,8 @@
             this.ctx.lineTo(width, y);
             this.ctx.bezierCurveTo(width, y + y / 8, x, y + y / 8, x, y);
             this.ctx.fillStyle = colorSide;
-            this.ctx.strokeStyle = "#f4f3db";
+            this.ctx.strokeStyle = "rgba(20, 20, 20, 0.4)";
+
             this.ctx.fill();
             this.ctx.stroke();
             this.ctx.closePath();
@@ -53,6 +53,7 @@
 
         drawLayers(x, y, width, height, layers, colorSide, colorTop, fillColor = "") {
 
+            this.resetCanvas();
             for (var i = 0; i < layers; i++) {
                 this.drawSide(
                     x + width / 8 * i,
@@ -66,7 +67,11 @@
                 }
             }
         }
+
+        resetCanvas() {
+            this.ctx.clearRect(0, 0, this.c.width, this.c.height);
+        }
     }
-    var drawCake = new DrawCake();
-    drawCake.drawLayers(200, 350, 300, 100, 3, "#fffdd0", "#fffdd0", "#DC0202");
+    
+    //drawCake.drawLayers(150, 300, 300, 100, 3, "#fbfbfb", "#fbfbfb");
 </script>

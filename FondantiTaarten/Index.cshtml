@@ -6,18 +6,16 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="~/Index.css" />
-    <!-- Render Shared Header-->
-    @RenderPage("~/_Shared/_Header.cshtml")
 </head>
 <body>
-    <!-- Render Shared Navbar-->
-    @RenderPage("~/_Shared/_Navbar.cshtml")
+    <!-- Render Shared Header-->
+    @RenderPage("~/_Shared/_Header.cshtml")
     <div class="container">
         <div class="row">
-            <div class="col-sm-7 col-md-7 col-lg-7">
-                hallo
+            <div class="col-md-7">
+                @RenderPage("~/_Shared/cakeCanvas.cshtml")
             </div>
-            <div class="col-sm-5 col-md-5 col-lg-5">
+            <div class="col-md-5">
                 <div class="keuze-scherm">
                     <div class="text">
                         <h1>Keuze</h1>
@@ -27,9 +25,9 @@
                         <div class="form-group">
                             <select class="form-control" id="Grootte">
                                 <option disabled selected>Voer het aantal personen in voor de taart</option>
-                                <option>1 < 15</option>
-                                <option>15 < 30</option>
-                                <option>30 < 45 </option>
+                                <option value="0">1 < 15</option>
+                                <option value="1">15 < 30</option>
+                                <option value="2">30 < 45 </option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -57,7 +55,7 @@
                             <select class="form-control" id="Soort">
                                 <option disabled selected>Kies het soort cake voor de taart</option>
                                 <option>Biscuit Deeg</option>
-                                <option>Chocolate</option>
+                                <option>Choclade</option>
                                 <option>Red velvet</option>
                             </select>
                         </div><div class="form-group">
@@ -104,6 +102,8 @@
                                     }
                                 }
                             </script>
+                            <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+                            <script type="text/javascript" src="~/Scripts/GetInput.js"></script>
                         </div>
                     </form>
                 </div>
