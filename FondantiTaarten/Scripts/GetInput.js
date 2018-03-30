@@ -1,6 +1,5 @@
-﻿var width, height, color, layers;
+﻿var width, height, colorType, colorCover, colorFill, color, layers;
 var drawCake = new DrawCake();
-
 
 $("#Grootte").on("change", function () {
     var size = parseInt(this.value);
@@ -22,24 +21,36 @@ $("#Grootte").on("change", function () {
             break;
     }
 
-    if (color == null) {
+    if (color != null) {
+        if (colorCover == null) {
+            color = colorType;
+        }
+        else {
+            color = colorCover;
+            colorFill = "";
+        }
+    }
+    else
+    {
         color = "#ffffff";
     }
-    drawCake.drawLayers(150, 300, width, height, layers, color, color);
+
+    drawCake.drawLayers(0, 300, width, height, layers, color, color, colorFill);
 });
+
 $("#Soort").on("change", function () {
     switch (this.value) {
         case "Biscuit Deeg":
-            color = "#D19A57";
+            colorType = "#D19A57";
             break;
         case "Choclade":
-            color = "#724737";
+            colorType = "#724737";
             break;
         case "Red velvet":
-            color = "#821B28";
+            colorType = "#821B28";
             break;
         default:
-            color = "#ffffff";
+            colorType = "#ffffff";
             break;
     }
 
@@ -48,18 +59,48 @@ $("#Soort").on("change", function () {
         heught = 100;
     }
 
-    drawCake.drawLayers(150, 300, width, height, layers, color, color);
+
+    if (colorCover == null) {
+        color = colorType;
+    }
+    else {
+        color = colorCover;
+    }
+
+    drawCake.drawLayers(0, 300, width, height, layers, color, color, colorFill);
 });
+
+$("#Vulling").on("change", function () {
+    switch (this.value) {
+        case "Kindervulling (vruchtencompote en room)":
+            colorFill = "#AA1D27";
+            break;
+        case "Gele room met Oreo vulling":
+            colorFill = "#D9BE71";
+            break;
+        case "Champagne Room met verse frambozen":
+            colorFill = "#FAECAE";
+            break;
+    }
+
+    if (colorCover != null) {
+        colorFill = "";
+    }
+    else if (colorType != null) {
+        drawCake.drawLayers(0, 300, width, height, layers, color, color, colorFill);
+    }
+});
+
 $("#Bekleding").on("change", function () {
     switch (this.value) {
         case "Fondant":
-            color = "#EDEFEE";
+            colorCover = "#EDEFEE";
             break;
         case "Marsepein":
-            color = "#E2C583";
+            colorCover = "#E2C583";
             break;
         default:
-            color = "#ffffff";
+            colorCover = "#ffffff";
             break;
     }
 
@@ -67,5 +108,6 @@ $("#Bekleding").on("change", function () {
         width = 300;
         heught = 100;
     }
-    drawCake.drawLayers(150, 300, width, height, layers, color, color);
+    colorFill = "";
+    drawCake.drawLayers(0, 300, width, height, layers, colorCover, colorCover);
 });
