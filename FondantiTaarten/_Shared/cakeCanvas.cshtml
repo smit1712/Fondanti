@@ -40,15 +40,17 @@
         drawFilling(x, y, width, height, color) {
             width = x + width;
             height = y + height;
+            var fillingHeight = y + (height - y) / 2;
+            var bezierHeight = fillingHeight + fillingHeight / 8;
 
             this.ctx.beginPath();
-            this.ctx.moveTo(x, y + y / 6);
-            this.ctx.bezierCurveTo(x, y + y / 6 + y / 8, width, y + y / 6 + y / 8, width, y + y / 6);
-            this.ctx.lineWidth = 4;
+            this.ctx.moveTo(x, fillingHeight);
+            this.ctx.bezierCurveTo(x, bezierHeight, width, bezierHeight, width, fillingHeight);
+            this.ctx.lineWidth = 5;
             this.ctx.strokeStyle = color;
             this.ctx.stroke();
-            this.ctx.lineWidth = 1;
             this.ctx.closePath();
+            this.ctx.lineWidth = 1;
         }
 
         drawLayers(x, y, width, height, layers, colorSide, colorTop, fillColor = "") {
@@ -72,6 +74,4 @@
             this.ctx.clearRect(0, 0, this.c.width, this.c.height);
         }
     }
-    
-    //drawCake.drawLayers(150, 300, 300, 100, 3, "#fbfbfb", "#fbfbfb");
 </script>
