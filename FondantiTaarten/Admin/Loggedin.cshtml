@@ -1,0 +1,78 @@
+﻿@{
+
+    var db = Database.Open("FondantiDataBase");
+    var SQLCOMMAND = "SELECT Forename, Surname From Users Where UserId=@0";
+    var data = db.QuerySingle(SQLCOMMAND, WebSecurity.CurrentUserId);
+
+
+    var Forename = data.Forename;
+    var Surname = data.Surname;
+
+    var message = "";
+
+    if (IsPost)
+    {
+        AntiForgery.Validate();
+
+        Forename = Request["Forename"];
+        Surname = Request["Surname"];
+
+
+        //VALIDATION
+        Validation.RequireFields("Forename", "Surname");
+        if (Validation.IsValid())
+        {
+
+            var SQLUPDATE = "UPDATE Users set Forename=@0, Surname=@1 Where UserId=@2";
+
+            try
+            {
+                db.Execute(SQLUPDATE, Forename, Surname, WebSecurity.CurrentUserId);
+                message = "Updated!";
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+            }
+        }
+
+
+    }
+
+
+
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <form method="post">
+        @AntiForgery.GetHtml()
+        <fieldset>
+            <legend>Manage Account</legend>
+            @Html.ValidationSummary(true)
+            <div>@message</div>
+
+            <div>
+                <label>Forename</label>
+                <input type="text" name="Forename" value="@Forename" />
+                @Html.ValidationMessage("Forename")
+            </div>
+
+            <div>
+                <label>Surname</label>
+                <input type="text" name="Surname" value="@Surname" />
+                @Html.ValidationMessage("Surname")
+            </div>
+
+
+            <input type="submit" value="Update Account" />
+
+        </fieldset>
+
+    </form>
+</body>
+</html>
