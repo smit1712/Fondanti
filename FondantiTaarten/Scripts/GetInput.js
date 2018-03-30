@@ -4,17 +4,17 @@ var drawCake = new DrawCake();
 $("#Grootte").on("change", function () {
     var size = parseInt(this.value);
     switch (size) {
-        case 0:
+        case 15:
             width = 200;
             height = 50;
             layers = 1;
             break;
-        case 1:
+        case 30:
             width = 250;
             height = 75;
             layers = 2;
             break;
-        case 2:
+        case 45:
             width = 300;
             height = 100;
             layers = 3;
@@ -30,8 +30,7 @@ $("#Grootte").on("change", function () {
             colorFill = "";
         }
     }
-    else
-    {
+    else {
         color = "#ffffff";
     }
 

@@ -95,7 +95,7 @@
     dynamic prijsbekleding = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", Bekleding);
     dynamic prijsdecoratie = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", decoratie);
 
-    if (thema != "Kies uw thema")
+    if (thema != "Kies uw thema" && thema != null)
     {
         price = prijsthema[0].prijs + prijscake[0].prijs + prijsvulling[0].prijs + prijsbekleding[0].prijs + prijsdecoratie[0].prijs;
         price = price * ipersonen;
@@ -130,7 +130,7 @@
 
                     <form method="post">
                         <div class="form-group">
-                            <select class="form-control" id="Grootte" name="personen">
+                            <select class="form-control" id="Grootte" name="personen" required>
                                 <option disabled selected value="@personen" >@personen</option>
                                 <option value="15">1 < 15</option>
                                 <option value="30">15 < 30</option>
@@ -138,7 +138,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" id="Thema" name="Thema" onchange="mythema()">
+                            <select class="form-control" id="Thema" name="Thema" onchange="mythema()" required>
                                 <option disabled selected value="@thema">@thema</option>
                                 <option value="Verjaardag volwassene">Verjaardag volwassene</option>
                                 <option value="Bruiloft">Bruiloft</option>
@@ -161,23 +161,23 @@
                             </script>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" id="Soort" name="Cake">
+                            <select class="form-control" id="Soort" name="Cake"required>
                                 <option disabled selected value="@cake">@cake</option>
                                 <option value="Biscuit Deeg">Biscuit Deeg</option>
                                 <option value="Choclade">Choclade</option>
                                 <option value="Red velvet">Red velvet</option>
                             </select>
                             <div class="form-group">
-                                <select class="form-control" name="Vulling" id="Vulling">
+                                <select class="form-control" name="Vulling" id="Vulling"required>
                                     <option disabled selected value="@vulling">@vulling</option>
-                                    <option value="Kindervulling">Kindervulling (vruchtencompote en room)</option>
+                                    <option value="Kindervulling (vruchtencompote en room)">Kindervulling (vruchtencompote en room)</option>
                                     <option value="Gele room met Oreo vulling">Gele room met Oreo vulling</option>
                                     <option value="Champagne Room met verse frambozen">Champagne Room met verse frambozen</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" name="Bekleding" id="Bekleding">
+                            <select class="form-control" name="Bekleding" id="Bekleding"required>
                                 <option disabled selected value="@Bekleding">@Bekleding</option>
                                 <option value="Fondant">Fondant</option>
                                 <option value="Marsepein">Marsepein</option>
@@ -185,7 +185,7 @@
                         </div>
 
                         <div class="form-group">
-                            <select class="form-control" name="Decoratie" id="Decoratie">
+                            <select class="form-control" name="Decoratie" id="Decoratie"required>
                                 <option disabled selected value="@decoratie">@decoratie</option>
                                 <option value="Eenvoudig">Eenvoudig</option>
                                 <option value="Gemiddeld">Gemiddeld</option>
@@ -193,7 +193,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" id="Allergieen" name="Allergieen" onchange="myallergieen()">
+                            <select class="form-control" id="Allergieen" name="Allergieen" onchange="myallergieen()"required>
                                 <option disabled selected value="@allergieen">@allergieen</option>
                                 <option value="1">Geen</option>
                                 <option value="1">Gluten Vrij </option>
