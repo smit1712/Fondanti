@@ -7,39 +7,270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="~/AdminPage.css" />
     <!-- Render Shared Header-->
     @RenderPage("~/_Shared/_Header.cshtml")
+    <link rel="stylesheet" href="~/AdminPage.css"/>
 </head>
 <body>
     <!-- Render Shared Navbar-->
     @RenderPage("~/_Shared/_Navbar.cshtml")
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-7 col-md-7 col-lg-7">
-                <div class="kop">
-                    <h2>
-                        Prijs type cake p.p.
-                    </h2>
-                </div>
-                <div class="row">
-                    <div class="voorkop">
-                        <p>Chocolate</p>
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon">$</span>
-                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                        <span class="input-group-addon">.00</span>
-                    </div>      
-                </div>
-                
-
-            </div>
-            <div class="col-sm-5 col-md-5 col-lg-5">
+    <form>
+        <div class="container" style="margin-top: 20px;">
+            <div class="koptekst">
+                <h4>
+                    Prijs type cake p.p.
+                </h4>
             </div>
         </div>
-    </div>
+        <div class="container" style="margin-top: 10px">
+            <div class="container">
+                <div class="row">
+                    <div class="form-inline" style="width: 600px">
+                        <div class="col-md-6">
+                            <div class="voorkop">
+                                <p>Chocolate</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                                <input type="number" name="ChocolatePr" class="form-control" value="1.00" min="0" step="0.01" style="text-align: center ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <div class="container">
+                <div class="row">
+                    <div class="form-inline" style="width: 600px">
+                        <div class="col-md-6">
+                            <div class="voorkop">
+                                <p>Red velvet</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                                <input type="number" name="RedVelvetPr" class="form-control" value="1.00" min="0" step="0.01" style="text-align: center ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <div class="container">
+                <div class="row">
+                    <div class="form-inline" style="width: 600px">
+                        <div class="col-md-6">
+                            <div class="voorkop">
+                                <p>Biscuitdeeg</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                                <input type="number" name="BiscuitdeegPr" class="form-control" value="1.00" min="0" step="0.01" style="text-align: center ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" style="margin-top: 20px;">
+            <div class="koptekst">
+                <h4>
+                    Type bekleding p.p.
+                </h4>
+            </div>
+        </div>
+        <div class="container" style="margin-top: 10px">
+            <div class="container">
+                <div class="row">
+                    <div class="form-inline" style="width: 600px">
+                        <div class="col-md-6">
+                            <div class="voorkop">
+                                <p>Fondant</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                                <input type="number" name="FondantPr" class="form-control" value="1.00" min="0" step="0.01" style="text-align: center ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="form-inline" style="width: 600px">
+                        <div class="col-md-6">
+                            <div class="voorkop">
+                                <p>Marsepein</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                                <input type="number" name="MarsepeinPr" class="form-control" value="1.00" min="0" step="0.01" style="text-align: center ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container" style="margin-top: 20px;">
+            <div class="koptekst">
+                <h4>
+                    Type vulling p.p.
+                </h4>
+            </div>
+        </div>
+        <div class="container" style="margin-top: 10px">
+            <div class="container">
+                <div class="row">
+                    <div class="form-inline" style="width: 600px">
+                        <div class="col-md-6">
+                            <div class="voorkop">
+                                <p>Champagne Room met verse frambozen</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                                <input type="number" name="ChampagneRoomPr" class="form-control" value="1.00" min="0" step="0.01" style="text-align: center ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="form-inline" style="width: 600px">
+                        <div class="col-md-6">
+                            <div class="voorkop">
+                                <p>Gele room met Oreo vulling</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                                <input type="number" name="GeleRoomPr" class="form-control" value="1.00" min="0" step="0.01" style="text-align: center ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="form-inline" style="width: 600px">
+                        <div class="col-md-6">
+                            <div class="voorkop">
+                                <p>Kindervulling (vruchtencompote en room)</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                                <input type="number" name="KindervullingPr" class="form-control" value="1.00" min="0" step="0.01" style="text-align: center ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" style="margin-top: 20px;">
+            <div class="koptekst">
+                <h4>
+                    Niveau Decoratie p.p.
+                </h4>
+            </div>
+        </div>
+        <div class="container" style="margin-top: 10px">
+            <div class="container">
+                <div class="row">
+                    <div class="form-inline" style="width: 600px">
+                        <div class="col-md-6">
+                            <div class="voorkop">
+                                <p>Eenvoudig</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                                <input type="number" name="EenvoudigPr" class="form-control" value="1.00" min="0" step="0.01" style="text-align: center ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="form-inline" style="width: 600px">
+                        <div class="col-md-6">
+                            <div class="voorkop">
+                                <p>Gemiddeld</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                                <input type="number" name="GemiddeldPr" class="form-control" value="1.00" min="0" step="0.01" style="text-align: center ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="form-inline" style="width: 600px">
+                        <div class="col-md-6">
+                            <div class="voorkop">
+                                <p>Uitgebreid</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                                <input type="number" name="UitgebreidPr" class="form-control" value="1.00" min="0" step="0.01" style="text-align: center ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </body>
 </html>
