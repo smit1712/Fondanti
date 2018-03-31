@@ -32,7 +32,7 @@
     else { cake = Session["cake"] as string; }
     if (Session["cake"] == null && Request["cake"] == null)
     {
-        cake = "kies het soort cake voor de taart";
+        cake = "Kies het soort cake voor de taart";
     }
     string vulling = Request["vulling"];
     if (Session["vulling"] == null || Convert.ToString(Session["vulling"]) != Request["vulling"])
@@ -42,7 +42,7 @@
     else { vulling = Session["vulling"] as string; }
     if (Session["vulling"] == null && Request["vulling"] == null)
     {
-        vulling = "kies uw vulling";
+        vulling = "Kies uw vulling";
     }
     string Bekleding = Request["Bekleding"];
     if (Session["Bekleding"] == null || Convert.ToString(Session["Bekleding"]) != Request["Bekleding"])
@@ -52,7 +52,7 @@
     else { Bekleding = Session["Bekleding"] as string; }
     if (Session["Bekleding"] == null && Request["Bekleding"] == null)
     {
-        Bekleding = "kies uw vulling";
+        Bekleding = "Kies uw bekleding";
     }
     string decoratie = Request["Decoratie"];
     if (Session["decoratie"] == null || Convert.ToString(Session["decoratie"]) != Request["decoratie"])
