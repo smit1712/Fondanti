@@ -5,105 +5,71 @@
 
     string personen;
     string thema;
-    if (Session["personen"] == null || Convert.ToString(Session["personen"]) != Request["personen"])
-    {
-        personen = Request["personen"];
-    }
-    else { personen = Session["personen"] as string; }
-    if (Session["personen"] == null && Request["personen"] == null)
-    {
-        personen = "Voer het aantal personen in voor de taart";
-    }
+    string cake;
+    string vulling;
+    string Bekleding;
+    string decoratie;
+    string allergieen;
+    string required = "required";
 
-    if (Session["thema"] == null || Convert.ToString(Session["thema"]) != Request["thema"])
-    {
-        thema = Request["thema"];
-    }
-    else { thema = Session["thema"] as string; }
-    if (Session["thema"] == null && Request["thema"] == null)
-    {
-        thema = "Kies uw thema";
-    }
-    string cake = Request["Cake"];
-    if (Session["cake"] == null || Convert.ToString(Session["cake"]) != Request["cake"])
-    {
-        cake = Request["cake"];
-    }
-    else { cake = Session["cake"] as string; }
-    if (Session["cake"] == null && Request["cake"] == null)
-    {
-        cake = "Kies het soort cake voor de taart";
-    }
-    string vulling = Request["vulling"];
-    if (Session["vulling"] == null || Convert.ToString(Session["vulling"]) != Request["vulling"])
-    {
-        vulling = Request["vulling"];
-    }
-    else { vulling = Session["vulling"] as string; }
-    if (Session["vulling"] == null && Request["vulling"] == null)
-    {
-        vulling = "Kies uw vulling";
-    }
-    string Bekleding = Request["Bekleding"];
-    if (Session["Bekleding"] == null || Convert.ToString(Session["Bekleding"]) != Request["Bekleding"])
-    {
-        Bekleding = Request["Bekleding"];
-    }
-    else { Bekleding = Session["Bekleding"] as string; }
-    if (Session["Bekleding"] == null && Request["Bekleding"] == null)
-    {
-        Bekleding = "Kies uw bekleding";
-    }
-    string decoratie = Request["Decoratie"];
-    if (Session["decoratie"] == null || Convert.ToString(Session["decoratie"]) != Request["decoratie"])
-    {
-        decoratie = Request["decoratie"];
-    }
-    else { decoratie = Session["decoratie"] as string; }
-    if (Session["decoratie"] == null && Request["decoratie"] == null)
-    {
-        decoratie = "Kies het niveau van decoratie";
-    }
-    string allergieen = Request["Allergieen"];
-    if (Session["allergieen"] == null || Convert.ToString(Session["allergieen"]) != Request["allergieen"])
-    {
-        allergieen = Request["allergieen"];
-    }
-    else { allergieen = Session["allergieen"] as string; }
-    if (Session["allergieen"] == null && Request["allergieen"] == null)
-    {
-        allergieen = "Kies uw eventuele allergieen";
-    }
+
     int ipersonen = 0;
 
-    Session["personen"] = personen;
-    Session["thema"] = thema;
-    Session["cake"] = cake;
-    Session["vulling"] = vulling;
-    Session["bekleding"] = Bekleding;
-    Session["decoratie"] = decoratie;
-    Session["allergieen"] = allergieen;
+    string sprice = "€";
 
-    if (personen != "Voer het aantal personen in voor de taart")
+    if (IsPost)
     {
+        if (Request["Personen"] == null) { Session["Personen"] = Session["Personen"]; } else { Session["Personen"] = Request["Personen"]; }
+        if (Request["Thema"] == null) { Session["Thema"] = Session["Thema"]; } else { Session["Thema"] = Request["Thema"]; }
+        if (Request["Cake"] == null) { Session["Cake"] = Session["Cake"]; } else { Session["Cake"] = Request["Cake"]; }
+        if (Request["Vulling"] == null) { Session["Vulling"] = Session["Vulling"]; } else { Session["Vulling"] = Request["Vulling"]; }
+        if (Request["Bekleding"] == null) { Session["Bekleding"] = Session["Bekleding"]; } else { Session["Bekleding"] = Request["Bekleding"]; }
+        if (Request["Decoratie"] == null) { Session["Decoratie"] = Session["Decoratie"]; } else { Session["Decoratie"] = Request["Decoratie"]; }
+        if (Request["Allergieen"] == null) { Session["Allergieen"] = Session["Allergieen"]; } else { Session["Allergieen"] = Request["Allergieen"]; }
+
+        personen = Session["Personen"] as string;
+        thema = Session["Thema"] as string;
+        cake = Session["Cake"] as string;
+        vulling = Session["Vulling"] as string;
+        Bekleding = Session["Bekleding"] as string;
+        decoratie = Session["Decoratie"] as string;
+        allergieen = Session["Allergieen"] as string;
+
         ipersonen = Convert.ToInt32(personen);
-    }
-    decimal price = 0;
-    dynamic prijsthema = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", thema);
-    dynamic prijscake = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", cake);
-    dynamic prijsvulling = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", vulling);
-    dynamic prijsbekleding = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", Bekleding);
-    dynamic prijsdecoratie = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", decoratie);
 
-    if (thema != "Kies uw thema" && thema != null)
-    {
-        price = prijsthema[0].prijs + prijscake[0].prijs + prijsvulling[0].prijs + prijsbekleding[0].prijs + prijsdecoratie[0].prijs;
-        price = price * ipersonen;
+        decimal price = 0;
+        dynamic prijsthema = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", thema);
+        dynamic prijscake = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", cake);
+        dynamic prijsvulling = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", vulling);
+        dynamic prijsbekleding = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", Bekleding);
+        dynamic prijsdecoratie = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", decoratie);
+        if (thema != "Kies uw thema" && thema != null)
+        {
+            price = prijsthema[0].prijs + prijscake[0].prijs + prijsvulling[0].prijs + prijsbekleding[0].prijs + prijsdecoratie[0].prijs;
+            price = price * ipersonen;
+            required = null;
+            sprice = "€" + price.ToString("##.###");
+
+            if (sprice == "€")
+            {
+                sprice = "";
+            }
+        }
     }
-    string sprice = "€" + price.ToString("##.###");
-    if (sprice == "€")
-    { sprice = ""; }
+    else
+    {
+        personen = "Voer het aantal personen in voor de taart";
+        thema = "Kies uw thema";
+        cake = "Kies het soort cake voor de taart";
+        vulling = "Kies uw vulling";
+        Bekleding = "Kies uw bekleding";
+        decoratie = "Kies het niveau van decoratie";
+        allergieen = "Kies uw eventuele allergieen";
+    }
+
     db.Close();
+
+
 }
 
 <!DOCTYPE html>
@@ -131,7 +97,7 @@
 
                     <form method="post">
                         <div class="form-group">
-                            <select class="form-control" id="Grootte" name="personen" required>
+                            <select class="form-control" id="Grootte" name="Personen" @required>
                                 <option disabled selected value="@personen" >@personen</option>
                                 <option value="15">1 < 15</option>
                                 <option value="30">15 < 30</option>
@@ -140,7 +106,7 @@
                         </div>
 
                         <div class="form-group">
-                            <select class="form-control" id="Thema" name="Thema" onchange="mythema()" required>
+                            <select class="form-control" id="Thema" name="Thema" onchange="mythema()" @required>
                                 <option disabled selected value="@thema">@thema</option>
                                 <option value="Verjaardag volwassene">Verjaardag volwassene</option>
                                 <option value="Bruiloft">Bruiloft</option>
@@ -164,7 +130,7 @@
                         </div>
 
                         <div class="form-group">
-                            <select class="form-control" id="Soort" name="Cake" required>
+                            <select class="form-control" id="Soort" name="Cake" @required>
                                 <option disabled selected value="@cake">@cake</option>
                                 <option value="Biscuit Deeg">Biscuit Deeg</option>
                                 <option value="Choclade">Choclade</option>
@@ -173,7 +139,7 @@
                         </div>
 
                         <div class="form-group">
-                            <select class="form-control" name="Vulling" id="Vulling"required>
+                            <select class="form-control" name="Vulling" id="Vulling"@required>
                                 <option disabled selected value="@vulling">@vulling</option>
                                 <option value="Kindervulling (vruchtencompote en room)">Kindervulling (vruchtencompote en room)</option>
                                 <option value="Gele room met Oreo vulling">Gele room met Oreo vulling</option>
@@ -182,7 +148,7 @@
                         </div>
 
                         <div class="form-group">
-                            <select class="form-control" name="Bekleding" id="Bekleding"required>
+                            <select class="form-control" name="Bekleding" id="Bekleding"@required>
                                 <option disabled selected value="@Bekleding">@Bekleding</option>
                                 <option value="Fondant">Fondant</option>
                                 <option value="Marsepein">Marsepein</option>
@@ -190,7 +156,7 @@
                         </div>
 
                         <div class="form-group">
-                            <select class="form-control" name="Decoratie" id="Decoratie"required>
+                            <select class="form-control" name="Decoratie" id="Decoratie"@required>
                                 <option disabled selected value="@decoratie">@decoratie</option>
                                 <option value="Eenvoudig">Eenvoudig</option>
                                 <option value="Gemiddeld">Gemiddeld</option>
@@ -199,7 +165,7 @@
                         </div>
 
                         <div class="form-group">
-                            <select class="form-control" id="Allergieen" name="Allergieen" onchange="myallergieen()"required>
+                            <select class="form-control" id="Allergieen" name="Allergieen" onchange="myallergieen()"@required>
                                 <option disabled selected value="@allergieen">@allergieen</option>
                                 <option value="1">Geen</option>
                                 <option value="1">Gluten Vrij </option>
