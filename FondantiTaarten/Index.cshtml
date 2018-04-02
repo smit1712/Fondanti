@@ -119,11 +119,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-7">
-                <div class="taart" style="position: relative; float: left;top: 50%;left: 50%;transform: translate(-55%, -50%);">
-                    @RenderPage("~/_Shared/cakeCanvas.cshtml") 
-                </div>
-             </div>
-             <div class="col-md-5">
+                @RenderPage("~/_Shared/cakeCanvas.cshtml")
+            </div>
+            <div class="col-md-5">
                 <div class="keuze-scherm">
                     <div class="text">
                         <h1>Keuze</h1>
@@ -132,7 +130,7 @@
                     <form method="post">
                         <div class="form-group">
                             <select class="form-control" id="Grootte" name="personen" required>
-                                <option disabled selected value="@personen" >@personen</option>
+                                <option disabled selected value="@personen">@personen</option>
                                 <option value="15">1 < 15</option>
                                 <option value="30">15 < 30</option>
                                 <option value="45">30 < 45 </option>
@@ -152,14 +150,14 @@
                             </div>
                             <script>
                                 function mythema() {
-                                            var x = document.getElementById("Thema").value;
-                                            if (x == "Anders") {
-                                                inputThema.style.display = "block"
-                                            }
-                                            else {
-                                                inputThema.style.display = "none"
-                                            }
-                                        }
+                                    var x = document.getElementById("Thema").value;
+                                    if (x == "Anders") {
+                                        inputThema.style.display = "block"
+                                    }
+                                    else {
+                                        inputThema.style.display = "none"
+                                    }
+                                }
                             </script>
                         </div>
 
@@ -173,7 +171,7 @@
                         </div>
 
                         <div class="form-group">
-                            <select class="form-control" name="Vulling" id="Vulling"required>
+                            <select class="form-control" name="Vulling" id="Vulling" required>
                                 <option disabled selected value="@vulling">@vulling</option>
                                 <option value="Kindervulling (vruchtencompote en room)">Kindervulling (vruchtencompote en room)</option>
                                 <option value="Gele room met Oreo vulling">Gele room met Oreo vulling</option>
@@ -182,7 +180,7 @@
                         </div>
 
                         <div class="form-group">
-                            <select class="form-control" name="Bekleding" id="Bekleding"required>
+                            <select class="form-control" name="Bekleding" id="Bekleding" required>
                                 <option disabled selected value="@Bekleding">@Bekleding</option>
                                 <option value="Fondant">Fondant</option>
                                 <option value="Marsepein">Marsepein</option>
@@ -190,7 +188,7 @@
                         </div>
 
                         <div class="form-group">
-                            <select class="form-control" name="Decoratie" id="Decoratie"required>
+                            <select class="form-control" name="Decoratie" id="Decoratie" required>
                                 <option disabled selected value="@decoratie">@decoratie</option>
                                 <option value="Eenvoudig">Eenvoudig</option>
                                 <option value="Gemiddeld">Gemiddeld</option>
@@ -199,7 +197,7 @@
                         </div>
 
                         <div class="form-group">
-                            <select class="form-control" id="Allergieen" name="Allergieen" onchange="myallergieen()"required>
+                            <select class="form-control" id="Allergieen" name="Allergieen" onchange="myallergieen()" required>
                                 <option disabled selected value="@allergieen">@allergieen</option>
                                 <option value="1">Geen</option>
                                 <option value="1">Gluten Vrij </option>
@@ -210,23 +208,23 @@
                             </div>
                             <script>
                                 function myallergieen() {
-                                            var x = document.getElementById("Allergieen").value;
-                                            if (x == "Anders") {
-                                                inputAllergieen.style.display = "block"
-                                            }
-                                            else {
-                                                inputAllergieen.style.display = "none"
-                                            }
-                                        }
+                                    var x = document.getElementById("Allergieen").value;
+                                    if (x == "Anders") {
+                                        inputAllergieen.style.display = "block"
+                                    }
+                                    else {
+                                        inputAllergieen.style.display = "none"
+                                    }
+                                }
                             </script>
                         </div>
                         <div class="form-group">
-                            <input type="file" class="form-control"/>
+                            <input type="file" class="form-control" />
                         </div>
 
                         <div class="form-group">
                             <div class='input-group date' id='datetimepicker2'>
-                                <input type='date' class="form-control"/>
+                                <input type='date' class="form-control" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
