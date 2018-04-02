@@ -85,11 +85,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-7">
-                <div class="taart" style="position: relative; float: left;top: 50%;left: 50%;transform: translate(-55%, -50%);">
-                    @RenderPage("~/_Shared/cakeCanvas.cshtml") 
-                </div>
-             </div>
-             <div class="col-md-5">
+                @RenderPage("~/_Shared/cakeCanvas.cshtml")
+            </div>
+            <div class="col-md-5">
                 <div class="keuze-scherm">
                     <div class="text">
                         <h1>Keuze</h1>
@@ -118,14 +116,14 @@
                             </div>
                             <script>
                                 function mythema() {
-                                            var x = document.getElementById("Thema").value;
-                                            if (x == "Anders") {
-                                                inputThema.style.display = "block"
-                                            }
-                                            else {
-                                                inputThema.style.display = "none"
-                                            }
-                                        }
+                                    var x = document.getElementById("Thema").value;
+                                    if (x == "Anders") {
+                                        inputThema.style.display = "block"
+                                    }
+                                    else {
+                                        inputThema.style.display = "none"
+                                    }
+                                }
                             </script>
                         </div>
 
@@ -176,23 +174,23 @@
                             </div>
                             <script>
                                 function myallergieen() {
-                                            var x = document.getElementById("Allergieen").value;
-                                            if (x == "Anders") {
-                                                inputAllergieen.style.display = "block"
-                                            }
-                                            else {
-                                                inputAllergieen.style.display = "none"
-                                            }
-                                        }
+                                    var x = document.getElementById("Allergieen").value;
+                                    if (x == "Anders") {
+                                        inputAllergieen.style.display = "block"
+                                    }
+                                    else {
+                                        inputAllergieen.style.display = "none"
+                                    }
+                                }
                             </script>
                         </div>
                         <div class="form-group">
-                            <input type="file" class="form-control"/>
+                            <input type="file" class="form-control" />
                         </div>
 
                         <div class="form-group">
                             <div class='input-group date' id='datetimepicker2'>
-                                <input type='date' class="form-control"/>
+                                <input type='date' class="form-control" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
