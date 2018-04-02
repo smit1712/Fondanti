@@ -109,7 +109,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <link rel="stylesheet" href="~/Index.css" />
     <!-- Render Shared Header-->
     @RenderPage("~/_Shared/_Header.cshtml")
@@ -120,9 +119,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-7">
-                @RenderPage("~/_Shared/cakeCanvas.cshtml")
-            </div>
-            <div class="col-md-5">
+                <div class="taart" style="position: relative; float: left;top: 50%;left: 50%;transform: translate(-50%, -50%);">
+                    @RenderPage("~/_Shared/cakeCanvas.cshtml") 
+                </div>
+             </div>
+             <div class="col-md-5">
                 <div class="keuze-scherm">
                     <div class="text">
                         <h1>Keuze</h1>
@@ -137,6 +138,7 @@
                                 <option value="45">30 < 45 </option>
                             </select>
                         </div>
+
                         <div class="form-group">
                             <select class="form-control" id="Thema" name="Thema" onchange="mythema()" required>
                                 <option disabled selected value="@thema">@thema</option>
@@ -160,22 +162,25 @@
                                         }
                             </script>
                         </div>
+
                         <div class="form-group">
-                            <select class="form-control" id="Soort" name="Cake"required>
+                            <select class="form-control" id="Soort" name="Cake" required>
                                 <option disabled selected value="@cake">@cake</option>
                                 <option value="Biscuit Deeg">Biscuit Deeg</option>
                                 <option value="Choclade">Choclade</option>
                                 <option value="Red velvet">Red velvet</option>
                             </select>
-                            <div class="form-group">
-                                <select class="form-control" name="Vulling" id="Vulling"required>
-                                    <option disabled selected value="@vulling">@vulling</option>
-                                    <option value="Kindervulling (vruchtencompote en room)">Kindervulling (vruchtencompote en room)</option>
-                                    <option value="Gele room met Oreo vulling">Gele room met Oreo vulling</option>
-                                    <option value="Champagne Room met verse frambozen">Champagne Room met verse frambozen</option>
-                                </select>
-                            </div>
                         </div>
+
+                        <div class="form-group">
+                            <select class="form-control" name="Vulling" id="Vulling"required>
+                                <option disabled selected value="@vulling">@vulling</option>
+                                <option value="Kindervulling (vruchtencompote en room)">Kindervulling (vruchtencompote en room)</option>
+                                <option value="Gele room met Oreo vulling">Gele room met Oreo vulling</option>
+                                <option value="Champagne Room met verse frambozen">Champagne Room met verse frambozen</option>
+                            </select>
+                        </div>
+
                         <div class="form-group">
                             <select class="form-control" name="Bekleding" id="Bekleding"required>
                                 <option disabled selected value="@Bekleding">@Bekleding</option>
@@ -192,6 +197,7 @@
                                 <option value="Uitgebreid">Uitgebreid</option>
                             </select>
                         </div>
+
                         <div class="form-group">
                             <select class="form-control" id="Allergieen" name="Allergieen" onchange="myallergieen()"required>
                                 <option disabled selected value="@allergieen">@allergieen</option>
@@ -213,49 +219,44 @@
                                             }
                                         }
                             </script>
-                            <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
-                            <script type="text/javascript" src="~/Scripts/GetInput.js"></script>
+                        </div>
+                        <div class="form-group">
+                            <input type="file" class="form-control"/>
                         </div>
 
-                        <!--<label class="custom-file">
-                            <input type="file" id="file" class="custom-file-input">
-                            <span class="custom-file-control"></span>
-                        </label> -->
-                        Datum van aflevering:
-
-                        <div class="container">
-                            <div class="row">
-                                <div>
-                                    <div class="form-group">
-                                        <div class='input-group date' id='datetimepicker2'>
-                                            <input type='date' class="form-control" />
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker2'>
+                                <input type='date' class="form-control"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#datetimepicker2').datetimepicker({
+                                    locale: 'nl'
+                                });
+                            });
+                        </script>
+                        <div class="form-group">
+                            <div class="container">
+                                <div class="row">
+                                    <button class="btn btn-primary" type="submit" name="submit">Bereken Prijs</button>
+                                    <div class="col-md-5 col-md-offset-6">
+                                        <div class="price" style="position: relative; float: left;top: 50%;left: 50%;transform: translate(-50%, -50%);">
+                                            @sprice
                                         </div>
                                     </div>
                                 </div>
-                                <script type="text/javascript">
-                                    $(function () {
-                                        $('#datetimepicker2').datetimepicker({
-                                            locale: 'nl'
-                                        });
-                                    });
-                                </script>
                             </div>
                         </div>
-                        <button class="btn btn-primary" type="submit" name="submit">
-                            Bereken Prijs
-                        </button>
-                        <div class="text">
-                            de prijs is:@sprice
-                        </div>
+                        <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+                        <script type="text/javascript" src="~/Scripts/GetInput.js"></script>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
-
 </body>
 </html>
