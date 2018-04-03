@@ -8,17 +8,17 @@
     GetSize(value) {
         var size = parseInt(value);
         switch (size) {
-            case 1 < 15:
+            case 15:
                 this.width = 200;
                 this.height = 50;
                 this.layers = 1;
                 break;
-            case 15 < 30:
+            case 30:
                 this.width = 250;
                 this.height = 75;
                 this.layers = 2;
                 break;
-            case 30 < 45:
+            case 45:
                 this.width = 300;
                 this.height = 100;
                 this.layers = 3;
