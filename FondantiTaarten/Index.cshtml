@@ -1,17 +1,87 @@
 ﻿@using WebMatrix.WebData
 
-@{ 
+@{
+    Database db = Database.Open("FondantiDataBase");
+
+    string personen;
+    string thema;
+    string cake;
+    string vulling;
+    string Bekleding;
+    string decoratie;
+    string allergieen;
+    string required = "required";
+
+
+    int ipersonen = 0;
+
+    string sprice = "€";
+
+    if (IsPost)
+    {
+        if (Request["Personen"] == null) { Session["Personen"] = Session["Personen"]; } else { Session["Personen"] = Request["Personen"]; }
+        if (Request["Thema"] == null) { Session["Thema"] = Session["Thema"]; } else { Session["Thema"] = Request["Thema"]; }
+        if (Request["Cake"] == null) { Session["Cake"] = Session["Cake"]; } else { Session["Cake"] = Request["Cake"]; }
+        if (Request["Vulling"] == null) { Session["Vulling"] = Session["Vulling"]; } else { Session["Vulling"] = Request["Vulling"]; }
+        if (Request["Bekleding"] == null) { Session["Bekleding"] = Session["Bekleding"]; } else { Session["Bekleding"] = Request["Bekleding"]; }
+        if (Request["Decoratie"] == null) { Session["Decoratie"] = Session["Decoratie"]; } else { Session["Decoratie"] = Request["Decoratie"]; }
+        if (Request["Allergieen"] == null) { Session["Allergieen"] = Session["Allergieen"]; } else { Session["Allergieen"] = Request["Allergieen"]; }
+
+        personen = Session["Personen"] as string;
+        thema = Session["Thema"] as string;
+        cake = Session["Cake"] as string;
+        vulling = Session["Vulling"] as string;
+        Bekleding = Session["Bekleding"] as string;
+        decoratie = Session["Decoratie"] as string;
+        allergieen = Session["Allergieen"] as string;
+
+        ipersonen = Convert.ToInt32(personen);
+
+        decimal price = 0;
+        dynamic prijsthema = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", thema);
+        dynamic prijscake = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", cake);
+        dynamic prijsvulling = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", vulling);
+        dynamic prijsbekleding = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", Bekleding);
+        dynamic prijsdecoratie = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", decoratie);
+        if (thema != "Kies uw thema" && thema != null)
+        {
+            price = prijsthema[0].prijs + prijscake[0].prijs + prijsvulling[0].prijs + prijsbekleding[0].prijs + prijsdecoratie[0].prijs;
+            price = price * ipersonen;
+            required = null;
+            sprice = "€" + price.ToString("##.###");
+
+            if (sprice == "€")
+            {
+                sprice = "";
+            }
+        }
+    }
+    else
+    {
+        personen = "Voer het aantal personen in voor de taart";
+        thema = "Kies uw thema";
+        cake = "Kies het soort cake voor de taart";
+        vulling = "Kies uw vulling";
+        Bekleding = "Kies uw bekleding";
+        decoratie = "Kies het niveau van decoratie";
+        allergieen = "Kies uw eventuele allergieen";
+    }
+
+    db.Close();
+
+
 }
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <link rel="stylesheet" href="~/Index.css" />
-</head>
-<body>
     <!-- Render Shared Header-->
     @RenderPage("~/_Shared/_Header.cshtml")
+</head>
+<body>
+    <!-- Render Shared Navbar-->
+    @RenderPage("~/_Shared/_Navbar.cshtml")
     <div class="container">
         <div class="row">
             <div class="col-md-7">
@@ -23,28 +93,27 @@
                         <h1>Keuze</h1>
                     </div>
 
-                    <form>
+                    <form method="post">
                         <div class="form-group">
-                            <select class="form-control" id="Grootte">
-                                <option disabled selected>Voer het aantal personen in voor de taart</option>
-                                <option value="0">1 < 15</option>
-                                <option value="1">15 < 30</option>
-                                <option value="2">30 < 45 </option>
+                            <select class="form-control" id="Grootte" name="Personen" @required>
+                                <option disabled selected value="@personen" >@personen</option>
+                                <option value="15">1 < 15</option>
+                                <option value="30">15 < 30</option>
+                                <option value="45">30 < 45 </option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <select class="form-control" id="Thema" onchange="mythema()">
-                                <option disabled selected>Kies uw thema</option>
-                                <option value="1">Verjaardag volwassene</option>
-                                <option value="1">Bruiloft</option>
-                                <option value="1">Verjaardag kind</option>
+                            <select class="form-control" id="Thema" name="Thema" onchange="mythema()" @required>
+                                <option disabled selected value="@thema">@thema</option>
+                                <option value="Verjaardag volwassene">Verjaardag volwassene</option>
+                                <option value="Bruiloft">Bruiloft</option>
+                                <option value="Verjaardag kind">Verjaardag kind</option>
                                 <option value="Anders">Anders, namelijk...</option>
                             </select>
                             <div id="inputThema" style="display: none">
                                 <input type="text" class="form-control" placeholder="Voer uw gewenste thema in" value="@Request.Form["inputThemaForm"]" />
                             </div>
-                            
                             <script>
                                 function mythema() {
                                     var x = document.getElementById("Thema").value;
@@ -57,39 +126,45 @@
                                 }
                             </script>
                         </div>
+
                         <div class="form-group">
-                            <select class="form-control" id="Soort">
-                                <option disabled selected>Kies het soort cake voor de taart</option>
-                                <option>Biscuit Deeg</option>
-                                <option>Choclade</option>
-                                <option>Red velvet</option>
-                            </select>
-                        </div><div class="form-group">
-                            <select class="form-control" id="Bekleding">
-                                <option disabled selected>Kies de bekleding voor de taart</option>
-                                <option>Fondant</option>
-                                <option>Marsepein</option>
+                            <select class="form-control" id="Soort" name="Cake" @required>
+                                <option disabled selected value="@cake">@cake</option>
+                                <option value="Biscuit Deeg">Biscuit Deeg</option>
+                                <option value="Choclade">Choclade</option>
+                                <option value="Red velvet">Red velvet</option>
                             </select>
                         </div>
+
                         <div class="form-group">
-                            <select class="form-control" id="Vulling">
-                                <option disabled selected>Kies uw vulling</option>
-                                <option>Kindervulling (vruchtencompote en room)</option>
-                                <option>Gele room met Oreo vulling</option>
-                                <option>Champagne Room met verse frambozen</option>
+                            <select class="form-control" name="Vulling" id="Vulling"@required>
+                                <option disabled selected value="@vulling">@vulling</option>
+                                <option value="Kindervulling (vruchtencompote en room)">Kindervulling (vruchtencompote en room)</option>
+                                <option value="Gele room met Oreo vulling">Gele room met Oreo vulling</option>
+                                <option value="Champagne Room met verse frambozen">Champagne Room met verse frambozen</option>
                             </select>
                         </div>
+
                         <div class="form-group">
-                            <select class="form-control" id="Decoratie">
-                                <option disabled selected>Kies het niveau van decoratie</option>
-                                <option>Eenvoudig</option>
-                                <option>Gemiddeld</option>
-                                <option>Uitgebreid</option>
+                            <select class="form-control" name="Bekleding" id="Bekleding"@required>
+                                <option disabled selected value="@Bekleding">@Bekleding</option>
+                                <option value="Fondant">Fondant</option>
+                                <option value="Marsepein">Marsepein</option>
                             </select>
                         </div>
+
                         <div class="form-group">
-                            <select class="form-control" id="Allergieen" onchange="myallergieen()">
-                                <option disabled selected>Kies uw eventuele allergieen</option>
+                            <select class="form-control" name="Decoratie" id="Decoratie"@required>
+                                <option disabled selected value="@decoratie">@decoratie</option>
+                                <option value="Eenvoudig">Eenvoudig</option>
+                                <option value="Gemiddeld">Gemiddeld</option>
+                                <option value="Uitgebreid">Uitgebreid</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <select class="form-control" id="Allergieen" name="Allergieen" onchange="myallergieen()"@required>
+                                <option disabled selected value="@allergieen">@allergieen</option>
                                 <option value="1">Geen</option>
                                 <option value="1">Gluten Vrij </option>
                                 <option value="Anders">Anders namelijk...</option>
@@ -108,57 +183,44 @@
                                     }
                                 }
                             </script>
-                            <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
-                            <script type="text/javascript" src="~/Scripts/GetInput.js"></script>
+                        </div>
+                        <div class="form-group">
+                            <input type="file" class="form-control" />
                         </div>
 
-                        <div class="container">
-                            <div class="row">
-                                <div>
-                                    <label class="custom-file">
-                                        <input type="file" name="img1" id="img1" class="custom-file-input" onchange="document.getElementById('file_name').value = this.value.split('\\').pop().split('/').pop()">
-                                        <input type="text" name="file_name" id="file_name">
-                                        <span class="custom-file-control"></span>
-                                        <i class="material-icons">file_upload</i>
-                                    </label>
-                                </div>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker2'>
+                                <input type='date' class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
                             </div>
-
                         </div>
-                        <!-- <label class="custom-file">
-                            <input type="file" id="file" class="custom-file-input">
-                            <span class="custom-file-control"></span>                            
-                            <i class="material-icons">file_upload</i>
-                        </label> -->
-
-                        Datum van aflevering:
-
-                        <div class="container">
-                            <div class="row">
-                                <div>
-                                    <div class="form-group">
-                                        <div class='input-group date' id='datetimepicker2'>
-                                            <input type='date' class="form-control" />
-                                            <span class="input-group-addon"></span>
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#datetimepicker2').datetimepicker({
+                                    locale: 'nl'
+                                });
+                            });
+                        </script>
+                        <div class="form-group">
+                            <div class="container">
+                                <div class="row">
+                                    <button class="btn btn-primary" type="submit" name="submit">Bereken Prijs</button>
+                                    <div class="col-md-5 col-md-offset-6">
+                                        <div class="price" style="position: relative; float: left;top: 50%;left: 50%;transform: translate(-50%, -50%);">
+                                            @sprice
                                         </div>
                                     </div>
                                 </div>
-                                <script type="text/javascript">
-                                    $(function () {
-                                        $('#datetimepicker2').datetimepicker({
-                                            locale: 'nl'
-                                        });
-                                    });
-                                </script>
                             </div>
                         </div>
-
+                        <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+                        <script type="text/javascript" src="~/Scripts/GetInput.js"></script>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    
-   
 </body>
 </html>

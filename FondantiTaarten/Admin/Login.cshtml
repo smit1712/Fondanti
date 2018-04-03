@@ -1,34 +1,75 @@
 ﻿@using WebMatrix.WebData;
-@{ Database db2 = Database.Open("FondantiDataBase");
+@{   
+
+
     if (WebSecurity.Initialized == false)
     {
-        WebSecurity.InitializeDatabaseConnection("FondantiDataBase", "Users", "UserId", "UserName", true);
+
+        WebSecurity.InitializeDatabaseConnection("FondantiDataBase", "Users", "UserId", "Username", true);
     }
-    var rememberMe = false; if (IsPost)
+
+    else
+if (IsPost)
     {
         AntiForgery.Validate();
-        var UserName = Request["User"];
+        string Username = Request["Username"];
         var Password = Request["Password"];
-        rememberMe = Request["rememberMe"].AsBool();
-        Validation.RequireFields("Userame", "Password");
+
+        Validation.RequireFields("Username", "Password");
         Validation.Add("Password", Validator.StringLength(16, 6));
         Validation.Add("Username", Validator.Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", "Your username should be an email address"));
+
         var returnurl = Request["returnurl"];
         if (returnurl.IsEmpty())
         {
-            returnurl = Href("~/Index.cshtml");
+            returnurl = Href("~/Admin/AdminPage.cshtml");
+        }
+
+
+        if (Validation.IsValid())
+        {
+
+
+             if (WebSecurity.UserExists(Username) && WebSecurity.GetPasswordFailuresSinceLastSuccess(Username) >= 4 && WebSecurity.GetLastPasswordFailureDate(Username).AddMinutes(2) > DateTime.UtcNow)
+            {
+                Response.Redirect("~/account/AccountLockedOut");
+            }
+
+            if (WebSecurity.IsConfirmed(Username))
+            {
+
+                if (WebSecurity.Login(Username, Password))
+                {
+                    Context.RedirectLocal(returnurl);
+                }
+                else
+                {
+                    Validation.AddFormError("Incorrect username or password");
+                }
+            }
+            else
+            {
+                Validation.AddFormError("User does not exist or account is not confirmed");
+            }
+
         }
 
     }
-}
+    }
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <!-- Render Shared Header-->
+    @RenderPage("~/_Shared/_Header.cshtml")
+    <link rel="stylesheet" href="~/Admin/Login.css" />
 </head>
 <body>
-    <form method="post">
+    <!-- Render Shared Navbar-->
+    @RenderPage("~/_Shared/_Navbar.cshtml")
+    <div class="login-page">
+    <div class="form">
+    <form method="post" class="login-form">
         @AntiForgery.GetHtml()
         <fieldset>
             <legend>Login</legend>
@@ -42,19 +83,15 @@
 
             <div>
                 <label>Password</label>
-                <input type="password" name="password" />
+                <input type="password" name="Password" />
                 @Html.ValidationMessage("Password")
             </div>
 
-            <div>
-                <label>Remember Me?</label>
-                <input type="checkbox" name="rememberMe" value="true" checked="@rememberMe" />
-            </div>
-
-            <input type="submit" />
+            <button>Login</button>
         </fieldset>
     </form>
-
-
-</body>
+    
+    </div>
+        </div>
+   </body>
 </html>
