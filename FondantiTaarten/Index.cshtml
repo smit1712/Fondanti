@@ -11,9 +11,8 @@
     string decoratie;
     string allergieen;
     string required = "required";
-
-
     int ipersonen = 0;
+    string spersonen = "";
 
     string sprice = "€";
 
@@ -34,23 +33,10 @@
         Bekleding = Session["Bekleding"] as string;
         decoratie = Session["Decoratie"] as string;
         allergieen = Session["Allergieen"] as string;
-
-        switch (personen)
-        {
-            case "1 < 15":
-                personen = "15";
-                break;
-            case "15 < 30":
-                personen = "30";
-                break;
-            case "30 < 45":
-                personen = "45";
-                break;
-        }
-
-
-
+        
         ipersonen = Convert.ToInt32(personen);
+        spersonen = personen;
+
 
         decimal price = 0;
         dynamic prijsthema = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", thema);
@@ -94,9 +80,7 @@
             break;
     }
     db.Close();
-
-
-        }
+    }
 
 <!DOCTYPE html>
 <html lang="en">
@@ -122,10 +106,10 @@
                     <form method="post">
                         <div class="form-group">
                             <select class="form-control" id="Grootte" name="Personen" @required>
-                                <option disabled selected value="@personen" >@personen</option>
-                                <option value="1 < 15">1 < 15</option>
-                                <option value="15 < 30">15 < 30</option>
-                                <option value="30 < 45">30 < 45 </option>
+                                <option disabled selected value="@spersonen" >@personen</option>
+                                <option value="15">1 < 15</option>
+                                <option value="30">15 < 30</option>
+                                <option value="45">30 < 45 </option>
                             </select>
                         </div>
 
