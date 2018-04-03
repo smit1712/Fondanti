@@ -32,6 +32,7 @@
                                 <option value="2">30 < 45 </option>
                             </select>
                         </div>
+
                         <div class="form-group">
                             <select class="form-control" id="Thema" onchange="mythema()">
                                 <option disabled selected>Kies uw thema</option>
@@ -43,6 +44,7 @@
                             <div id="inputThema" style="display: none">
                                 <input type="text" class="form-control" placeholder="Voer uw gewenste thema in" value="@Request.Form["inputThemaForm"]" />
                             </div>
+                            
                             <script>
                                 function mythema() {
                                     var x = document.getElementById("Thema").value;
@@ -110,9 +112,23 @@
                             <script type="text/javascript" src="~/Scripts/GetInput.js"></script>
                         </div>
 
-                        <!--<label class="custom-file">
+                        <div class="container">
+                            <div class="row">
+                                <div>
+                                    <label class="custom-file">
+                                        <input type="file" name="img1" id="img1" class="custom-file-input" onchange="document.getElementById('file_name').value = this.value.split('\\').pop().split('/').pop()">
+                                        <input type="text" name="file_name" id="file_name">
+                                        <span class="custom-file-control"></span>
+                                        <i class="material-icons">file_upload</i>
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- <label class="custom-file">
                             <input type="file" id="file" class="custom-file-input">
-                            <span class="custom-file-control"></span>
+                            <span class="custom-file-control"></span>                            
+                            <i class="material-icons">file_upload</i>
                         </label> -->
 
                         Datum van aflevering:
@@ -123,9 +139,7 @@
                                     <div class="form-group">
                                         <div class='input-group date' id='datetimepicker2'>
                                             <input type='date' class="form-control" />
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
+                                            <span class="input-group-addon"></span>
                                         </div>
                                     </div>
                                 </div>
