@@ -11,9 +11,8 @@
     string decoratie;
     string allergieen;
     string required = "required";
-
-
     int ipersonen = 0;
+    string spersonen = "";
 
     string sprice = "€";
 
@@ -36,6 +35,8 @@
         allergieen = Session["Allergieen"] as string;
 
         ipersonen = Convert.ToInt32(personen);
+        spersonen = personen;
+
 
         decimal price = 0;
         dynamic prijsthema = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", thema);
@@ -45,7 +46,7 @@
         dynamic prijsdecoratie = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", decoratie);
         if (thema != "Kies uw thema" && thema != null)
         {
-            price = prijsthema[0].prijs + prijscake[0].prijs + prijsvulling[0].prijs + prijsbekleding[0].prijs + prijsdecoratie[0].prijs;
+            price = Convert.ToDecimal(prijsthema[0].prijs) + Convert.ToDecimal(prijscake[0].prijs) + Convert.ToDecimal(prijsvulling[0].prijs) + Convert.ToDecimal(prijsbekleding[0].prijs) + Convert.ToDecimal(prijsdecoratie[0].prijs);
             price = price * ipersonen;
             required = null;
             sprice = "€" + price.ToString("##.###");
@@ -66,11 +67,20 @@
         decoratie = "Kies het niveau van decoratie";
         allergieen = "Kies uw eventuele allergieen";
     }
-
+    switch (personen)
+    {
+        case "15":
+            personen = "1 < 15";
+            break;
+        case "30":
+            personen = "15 < 30";
+            break;
+        case "45":
+            personen = "30 < 45";
+            break;
+    }
     db.Close();
-
-
-}
+    }
 
 <!DOCTYPE html>
 <html lang="en">
@@ -96,7 +106,7 @@
                     <form method="post">
                         <div class="form-group">
                             <select class="form-control" id="Grootte" name="Personen" @required>
-                                <option disabled selected value="@personen" >@personen</option>
+                                <option disabled selected value="@spersonen" >@personen</option>
                                 <option value="15">1 < 15</option>
                                 <option value="30">15 < 30</option>
                                 <option value="45">30 < 45 </option>
@@ -119,10 +129,10 @@
                                     var x = document.getElementById("Thema").value;
                                     if (x == "Anders") {
                                         inputThema.style.display = "block"
-                                    }
+                                                            }
                                     else {
                                         inputThema.style.display = "none"
-                                    }
+                                                            }
                                 }
                             </script>
                         </div>
@@ -165,8 +175,8 @@
                         <div class="form-group">
                             <select class="form-control" id="Allergieen" name="Allergieen" onchange="myallergieen()"@required>
                                 <option disabled selected value="@allergieen">@allergieen</option>
-                                <option value="1">Geen</option>
-                                <option value="1">Gluten Vrij </option>
+                                <option value="Geen">Geen</option>
+                                <option value="Gluten Vrij">Gluten Vrij </option>
                                 <option value="Anders">Anders namelijk...</option>
                             </select>
                             <div id="inputAllergieen" style="display: none">
@@ -174,14 +184,14 @@
                             </div>
                             <script>
                                 function myallergieen() {
-                                    var x = document.getElementById("Allergieen").value;
-                                    if (x == "Anders") {
-                                        inputAllergieen.style.display = "block"
+            var x = document.getElementById("Allergieen").value;
+            if (x == "Anders") {
+                inputAllergieen.style.display = "block"
                                     }
-                                    else {
-                                        inputAllergieen.style.display = "none"
+            else {
+                inputAllergieen.style.display = "none"
                                     }
-                                }
+        }
                             </script>
                         </div>
                         <div class="form-group">
@@ -199,7 +209,7 @@
                         <script type="text/javascript">
                             $(function () {
                                 $('#datetimepicker2').datetimepicker({
-                                    locale: 'nl'
+            locale: 'nl'
                                 });
                             });
                         </script>
