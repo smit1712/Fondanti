@@ -47,7 +47,7 @@
             case "Biscuit Deeg":
                 this.colorType = "#D19A57";
                 break;
-            case "Choclade":
+            case "Chocolade":
                 this.colorType = "#724737";
                 break;
             case "Red velvet":

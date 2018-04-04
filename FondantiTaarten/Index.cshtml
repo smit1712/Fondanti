@@ -2,7 +2,6 @@
 
 @{
     Database db = Database.Open("FondantiDataBase");
-
     string personen;
     string thema;
     string cake;
@@ -57,19 +56,34 @@
             }
         }
 
-//hier wordt de mail gemaakt
-        WebMail.Send(to: "andriesvds@gmail.com", subject: "Bestelling taart",
-    body:
-    personen+"<br/>"+
-    thema+ "<br/>" +
-    cake + "<br/>" +
-    vulling + "<br/>" +
-    Bekleding + "<br/>" +
-    decoratie + "<br/>" +
-    allergieen + "<br/>" +
-    price    
-    , isBodyHtml: true);
+        //hier wordt de mail gemaakt
+        WebImage photo = WebImage.GetImageFromRequest();
+        var newFileName = "";
+        var imagePath = "";
 
+        if (photo != null)
+        {
+            newFileName = Guid.NewGuid().ToString() + "_" +
+               Path.GetFileName(photo.FileName);
+            imagePath = @"Img\" + newFileName;
+            photo.Save(@"~\" + imagePath);
+        }
+        var attachedfile = imagePath;
+        var attachfile = new string[] { attachedfile };
+
+
+        WebMail.Send(to: "buzzzerz@live.nl", subject: "Bestelling taart", filesToAttach: attachfile,
+            body:
+            DateTime.Now +
+            personen+"<br/>"+
+            thema+ "<br/>" +
+            cake + "<br/>" +
+            vulling + "<br/>" +
+            Bekleding + "<br/>" +
+            decoratie + "<br/>" +
+            allergieen + "<br/>" +
+            price
+            , isBodyHtml: true);
     }
     else
     {
@@ -117,7 +131,7 @@
                         <h1>Keuze</h1>
                     </div>
 
-                    <form method="post">
+                    <form method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <select class="form-control" id="Grootte" name="Personen" @required>
                                 <option disabled selected value="@spersonen" >@personen</option>
@@ -155,7 +169,7 @@
                             <select class="form-control" id="Soort" name="Cake" @required>
                                 <option disabled selected value="@cake">@cake</option>
                                 <option value="Biscuit Deeg">Biscuit Deeg</option>
-                                <option value="Choclade">Choclade</option>
+                                <option value="Chocolade">Chocolade</option>
                                 <option value="Red velvet">Red velvet</option>
                             </select>
                         </div>
@@ -208,9 +222,11 @@
         }
                             </script>
                         </div>
-                        <div class="form-group">
-                            <input type="file" class="form-control" />
-                        </div>
+                        <fieldset>
+                            <legend> Upload Image </legend>
+                            <label for="Image">Image</label>
+                            <input type="file" name="Image" />                                               
+                        </fieldset>
 
                         <div class="form-group">
                             <div class='input-group date' id='datetimepicker2'>
