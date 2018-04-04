@@ -13,7 +13,6 @@
     string required = "required";
     int ipersonen = 0;
     string spersonen = "";
-
     string sprice = "€";
 
     if (IsPost)
@@ -25,6 +24,7 @@
         if (Request["Bekleding"] == null) { Session["Bekleding"] = Session["Bekleding"]; } else { Session["Bekleding"] = Request["Bekleding"]; }
         if (Request["Decoratie"] == null) { Session["Decoratie"] = Session["Decoratie"]; } else { Session["Decoratie"] = Request["Decoratie"]; }
         if (Request["Allergieen"] == null) { Session["Allergieen"] = Session["Allergieen"]; } else { Session["Allergieen"] = Request["Allergieen"]; }
+
 
         personen = Session["Personen"] as string;
         thema = Session["Thema"] as string;
@@ -56,6 +56,20 @@
                 sprice = "";
             }
         }
+
+//hier wordt de mail gemaakt
+        WebMail.Send(to: "andriesvds@gmail.com", subject: "Bestelling taart",
+    body:
+    personen+"<br/>"+
+    thema+ "<br/>" +
+    cake + "<br/>" +
+    vulling + "<br/>" +
+    Bekleding + "<br/>" +
+    decoratie + "<br/>" +
+    allergieen + "<br/>" +
+    price    
+    , isBodyHtml: true);
+
     }
     else
     {
