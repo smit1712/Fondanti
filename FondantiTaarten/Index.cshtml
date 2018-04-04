@@ -33,7 +33,7 @@
         Bekleding = Session["Bekleding"] as string;
         decoratie = Session["Decoratie"] as string;
         allergieen = Session["Allergieen"] as string;
-        
+
         ipersonen = Convert.ToInt32(personen);
         spersonen = personen;
 
@@ -46,7 +46,7 @@
         dynamic prijsdecoratie = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", decoratie);
         if (thema != "Kies uw thema" && thema != null)
         {
-            price = prijsthema[0].prijs + prijscake[0].prijs + prijsvulling[0].prijs + prijsbekleding[0].prijs + prijsdecoratie[0].prijs;
+            price = Convert.ToDecimal(prijsthema[0].prijs) + Convert.ToDecimal(prijscake[0].prijs) + Convert.ToDecimal(prijsvulling[0].prijs) + Convert.ToDecimal(prijsbekleding[0].prijs) + Convert.ToDecimal(prijsdecoratie[0].prijs);
             price = price * ipersonen;
             required = null;
             sprice = "€" + price.ToString("##.###");
@@ -126,13 +126,13 @@
                             </div>
                             <script>
                                 function mythema() {
-                                var x = document.getElementById("Thema").value;
-                                if (x == "Anders") {
-                                    inputThema.style.display = "block"
-                                                        }
-                                else {
-                                    inputThema.style.display = "none"
-                                                        }
+                                    var x = document.getElementById("Thema").value;
+                                    if (x == "Anders") {
+                                        inputThema.style.display = "block"
+                                                            }
+                                    else {
+                                        inputThema.style.display = "none"
+                                                            }
                                 }
                             </script>
                         </div>
@@ -184,14 +184,14 @@
                             </div>
                             <script>
                                 function myallergieen() {
-                                var x = document.getElementById("Allergieen").value;
-                                if (x == "Anders") {
-                                    inputAllergieen.style.display = "block"
-                                                        }
-                                else {
-                                    inputAllergieen.style.display = "none"
-                                                        }
-                                }
+            var x = document.getElementById("Allergieen").value;
+            if (x == "Anders") {
+                inputAllergieen.style.display = "block"
+                                    }
+            else {
+                inputAllergieen.style.display = "none"
+                                    }
+        }
                             </script>
                         </div>
                         <div class="form-group">
@@ -209,7 +209,7 @@
                         <script type="text/javascript">
                             $(function () {
                                 $('#datetimepicker2').datetimepicker({
-                                locale: 'nl'
+            locale: 'nl'
                                 });
                             });
                         </script>
@@ -217,9 +217,8 @@
                             <div class="container">
                                 <div class="row">
                                     <button class="btn btn-primary" type="submit" name="submit">Bereken Prijs</button>
-                                    <button class="btn btn-primary" type="button" name="confirm">Confirm me</button>
                                     <div class="col-md-5 col-md-offset-6">
-                                        <div class="price">
+                                        <div class="price" style="position: relative; float: left;top: 50%;left: 50%;transform: translate(-50%, -50%);">
                                             @sprice
                                         </div>
                                     </div>
