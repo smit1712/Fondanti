@@ -11,6 +11,9 @@
     // // omdat ze al ingevuld zijn worden sommige input velden niet meer verplicht 
     string required = "required";
 
+    //tab space
+    var tab = "&nbsp;&nbsp;&nbsp;&nbsp;";
+
     //De sessies van de persoonsgegevens worden of vernieuwd of gevuld door de input form als deze ingevuld is
     if (Request["naam"] == null) { Session["naam"] = Session["naam"]; } else { Session["naam"] = Request["naam"]; }
     if (Request["achternaam"] == null) { Session["achternaam"] = Session["achternaam"]; } else { Session["achternaam"] = Request["achternaam"]; }
@@ -53,27 +56,29 @@
             attachedfile = imagePath;
             attachfile = new string[] { attachedfile };
         }
+
+
         // indien er geen foto geupload is, wordt de mail zonder bijlagen verstuurd
         if (attachfile[0] == "")
         {
-
-            WebMail.Send(to: "buzzzerz@live.nl", subject: "Bestelling taart",
+            WebMail.Send(to: "andriesvds@gmail.com", subject: "Bestelling taart",
                 body:
-              "personen:" + personen + "<br/>" +
-               "thema:" + thema + "<br/>" +
-               "cake:" + cake + "<br/>" +
-                "vulling:" + vulling + "<br/>" +
-              "bekleding:" + Bekleding + "<br/>" +
-              "decoratie:" + decoratie + "<br/>" +
-              "allergieen:" + allergieen + "<br/>" +
-               "Gewenste datum:" + Request["DateTime"] + "<br/>" +
-               "Prijs:" + price + "<br/>" +
-              "Naam:" + naam + " " +
-                achternaam + "<br/>" +
-               "Email:" + Email + "<br/>" +
-              "telefoonNummer:" + Tlnummer + "<br/>" +
-               "adres:" + Adres + " " + Huisnummer + " " + Postcode + "<br/>" +
-              "opmerkingen" + comment
+            "<table>" +
+            "<tr>"      +"personen: "          +"<td>"+ personen + "<br/>" +
+            "</tr><tr>" +"thema: "             +"<td>"+ thema + "<br/>" +
+            "</tr><tr>" +"cake: "              +"<td>"+ cake + "<br/>" +
+            "</tr><tr>" +"vulling: "           +"<td>"+ vulling + "<br/>" +
+            "</tr><tr>" +"bekleding: "         +"<td>"+ Bekleding + "<br/>" +
+            "</tr><tr>" +"decoratie: "         +"<td>"+ decoratie + "<br/>" +
+            "</tr><tr>" +"allergieen: "        +"<td>"+ allergieen + "<br/>" +
+            "</tr><tr>" +"Gewenste datum: "    +"<td>"+ Request["DateTime"] + "<br/>" +
+            "</tr><tr>" +"Prijs: "             +"<td>"+ price + "<br/>" +
+            "</tr><tr>" +"Naam: "              +"<td>"+ naam + " " + achternaam + "<br/>" +
+            "</tr><tr>" +"Email: "             +"<td>"+ Email + "<br/>" +
+            "</tr><tr>" +"telefoonNummer: "    +"<td>"+ Tlnummer + "<br/>" +
+            "</tr><tr>" +"adres: "             +"<td>"+ Adres + " " + Huisnummer + " " + Postcode + "<br/>" +
+            "</tr><tr>" +"opmerkingen: "       +"<td>"+ comment +
+            "</table>"
                 , isBodyHtml: true);
         }
         // anders wordt hij met bijlagen verstuurd
@@ -81,21 +86,22 @@
         {
             WebMail.Send(to: "buzzzerz@live.nl", subject: "Bestelling taart", filesToAttach: attachfile,
                 body:
-              "personen:" + personen + "<br/>" +
-               "thema:" + thema + "<br/>" +
-               "cake:" + cake + "<br/>" +
-                "vulling:" + vulling + "<br/>" +
-              "bekleding:" + Bekleding + "<br/>" +
-              "decoratie:" + decoratie + "<br/>" +
-              "allergieen:" + allergieen + "<br/>" +
-               "Gewenste datum:" + Request["DateTime"] + "<br/>" +
-               "Prijs:" + price + "<br/>" +
-              "Naam:" + naam + " " +
-                achternaam + "<br/>" +
-               "Email:" + Email + "<br/>" +
-              "telefoonNummer:" + Tlnummer + "<br/>" +
-               "adres:" + Adres + " " + Huisnummer + "" + Postcode + "<br/>" +
-              "opmerkingen" + comment
+            "<table>" +
+            "<tr>"      + "personen: "          + "<td>" + personen + "<br/>" +
+            "</tr><tr>" + "thema: "             + "<td>" + thema + "<br/>" +
+            "</tr><tr>" + "cake: "              + "<td>" + cake + "<br/>" +
+            "</tr><tr>" + "vulling: "           + "<td>" + vulling + "<br/>" +
+            "</tr><tr>" + "bekleding: "         + "<td>" + Bekleding + "<br/>" +
+            "</tr><tr>" + "decoratie: "         + "<td>" + decoratie + "<br/>" +
+            "</tr><tr>" + "allergieen: "        + "<td>" + allergieen + "<br/>" +
+            "</tr><tr>" + "Gewenste datum: "    + "<td>" + Request["DateTime"] + "<br/>" +
+            "</tr><tr>" + "Prijs: "             + "<td>" + price + "<br/>" +
+            "</tr><tr>" + "Naam: "              + "<td>" + naam + " " + achternaam + "<br/>" +
+            "</tr><tr>" + "Email: "             + "<td>" + Email + "<br/>" +
+            "</tr><tr>" + "telefoonNummer: "    + "<td>" + Tlnummer + "<br/>" +
+            "</tr><tr>" + "adres: "             + "<td>" + Adres + " " + Huisnummer + " " + Postcode + "<br/>" +
+            "</tr><tr>" + "opmerkingen: "       + "<td>" + comment +
+            "</table>"
                 , isBodyHtml: true);
         }
         // sommige velden zijn niet meer verplicht
