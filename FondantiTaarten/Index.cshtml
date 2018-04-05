@@ -59,7 +59,6 @@
         dynamic prijsbekleding = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", Bekleding);
         dynamic prijsdecoratie = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", decoratie);
 
-
         price = Convert.ToDecimal(prijsthema[0].prijs) + Convert.ToDecimal(prijscake[0].prijs) + Convert.ToDecimal(prijsvulling[0].prijs) + Convert.ToDecimal(prijsbekleding[0].prijs) + Convert.ToDecimal(prijsdecoratie[0].prijs);
         price = price * ipersonen;
         sprice = "€" + price.ToString("##.###");
@@ -205,22 +204,21 @@
                                 <option value="Gluten Vrij">Gluten Vrij </option>
                                 <option value="Anders">Anders, namelijk...</option>
                             </select>
-                        </div>
-                        <div id="inputAllergieen" style="display: none">
-                            <input type="text" class="form-control" name="inputAllergieenForm" placeholder="Voer uw allergie in" value="@Request.Form["inputAllergieenForm"]" />
-                        </div>
-                        <script>
-                            function myallergieen() {
-                                var x = document.getElementById("Allergieen").value;
-                                if (x == "Anders") {
-                                    inputAllergieen.style.display = "block"
+                            <div id="inputAllergieen" style="display: none">
+                                <input type="text" class="form-control" name="inputAllergieenForm" placeholder="Voer uw allergie in" value="@Request.Form["inputAllergieenForm"]" />
+                            </div>
+                            <script>
+                                function myallergieen() {
+                                    var x = document.getElementById("Allergieen").value;
+                                    if (x == "Anders") {
+                                        inputAllergieen.style.display = "block"
+                                    }
+                                    else {
+                                        inputAllergieen.style.display = "none"
+                                    }
                                 }
-                                else {
-                                    inputAllergieen.style.display = "none"
-                                }
-                            }
-                        </script>
-
+                            </script>
+                        </div>
                         <!-- Dit is de bereken knop en gooit alle keuzes van de dropdown menu's bij elkaar en berekent de prijs, en zet dat vervolgens achter het euroteken. -->
                         <div class="form-group">
                             <div class="container">
