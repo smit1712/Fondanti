@@ -1,5 +1,6 @@
 ﻿@using WebMatrix.WebData
 @{
+    WebSecurity.RequireAuthenticatedUser();
     Database db = Database.Open("FondantiDataBase");
 
     dynamic dbquery = db.Query("select * from Ingredienten");

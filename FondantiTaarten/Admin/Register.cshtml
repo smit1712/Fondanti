@@ -60,7 +60,15 @@
         <title></title>
     </head>
     <body>
-        <form method="post"> @AntiForgery.GetHtml() <fieldset> <legend>Register</legend> @Html.ValidationSummary(true) <div>@message</div> <div> <label>UserName (Email)</label> <input type="text" name="UserName" value="@UserName" /> @Html.ValidationMessage("UserName") </div> <div> <label>Password</label> <input type="password" name="Password" /> @Html.ValidationMessage("Password") </div> <div> <label>Confirm Password</label> <input type="password" name="ConfirmPassword" /> @Html.ValidationMessage("ConfirmPassword") </div> <div> <label>Forename</label> <input type="text" name="Forename" value="@Forename" /> @Html.ValidationMessage("Forename") </div> <div> <label>Surname</label> <input type="text" name="Surname" value="@Surname" /> @Html.ValidationMessage("Surname") </div> <input type="submit" value="Register" /> </fieldset> </form>
+        <form method="post"> @AntiForgery.GetHtml() <fieldset> 
+            <legend>Register</legend>
+            @Html.ValidationSummary(true) 
+            <div>@message</div> 
+            <div> <label>UserName (Email)   </label> <input type="text" name="UserName" value="@UserName" /> @Html.ValidationMessage("UserName") </div> 
+            <div> <label>Password           </label> <input type="password" name="Password" /> @Html.ValidationMessage("Password") </div> 
+            <div> <label>Confirm Password   </label> <input type="password" name="ConfirmPassword" /> @Html.ValidationMessage("ConfirmPassword") </div> 
+            <div> <label>Forename           </label> <input type="text" name="Forename" value="@Forename" /> @Html.ValidationMessage("Forename") </div> 
+            <div> <label>Surname            </label> <input type="text" name="Surname" value="@Surname" /> @Html.ValidationMessage("Surname") </div> <input type="submit" value="Register" /> </fieldset> </form>
 
     </body>
 </html>
