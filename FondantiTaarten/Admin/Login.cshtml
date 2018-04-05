@@ -1,22 +1,25 @@
 ﻿@using WebMatrix.WebData;
 @{   
 
-
+    /// <summary>Als er nog geen connectie met de database dan wordt hij hier aaangemaakt</summary>
     if (WebSecurity.Initialized == false)
     {
 
         WebSecurity.InitializeDatabaseConnection("FondantiDataBase", "Users", "UserId", "Username", true);
     }
 
-    else
-if (IsPost)
+    /// <summary>
+    /// Wanneer er op de knop wordt gedrukt wordt er in de database gekeken of de gegevens kloppen.
+    /// Als de gegevens kloppen wordt de gebruiker doorgestuurd naar de adminpagina.
+    /// Als er 4 keer het verkeerde wachtwoord wordt ingevuld komt het account op slot.
+    /// </summary>
+    else if (IsPost)
     {
         AntiForgery.Validate();
         string Username = Request["Username"];
         var Password = Request["Password"];
 
         Validation.RequireFields("Username", "Password");
-        Validation.Add("Password", Validator.StringLength(16, 6));
         Validation.Add("Username", Validator.Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", "Your username should be an email address"));
 
         var returnurl = Request["returnurl"];
@@ -30,9 +33,9 @@ if (IsPost)
         {
 
 
-             if (WebSecurity.UserExists(Username) && WebSecurity.GetPasswordFailuresSinceLastSuccess(Username) >= 4 && WebSecurity.GetLastPasswordFailureDate(Username).AddMinutes(2) > DateTime.UtcNow)
+            if (WebSecurity.UserExists(Username) && WebSecurity.GetPasswordFailuresSinceLastSuccess(Username) >= 4 && WebSecurity.GetLastPasswordFailureDate(Username).AddMinutes(2) > DateTime.UtcNow)
             {
-                Response.Redirect("~/account/AccountLockedOut");
+                Response.Redirect("~/Admin/AccountLockedOut");
             }
 
             if (WebSecurity.IsConfirmed(Username))
@@ -67,31 +70,36 @@ if (IsPost)
 <body>
     <!-- Render Shared Navbar-->
     @RenderPage("~/_Shared/_Navbar.cshtml")
+    <!--
+    Hier wirdt de loginform gemaakt.    
+    -->
     <div class="login-page">
-    <div class="form">
-    <form method="post" class="login-form">
-        @AntiForgery.GetHtml()
-        <fieldset>
-            <legend>Login</legend>
-            @Html.ValidationSummary(true)
+        <div class="form">
+            <form method="post" class="login-form">
+                @AntiForgery.GetHtml()
+                <fieldset>
+                    <legend>Login</legend>
+                    @Html.ValidationSummary(true)
 
-            <div>
-                <label>Username</label>
-                <input type="text" name="Username" />
-                @Html.ValidationMessage("Username")
-            </div>
+                    <div>
+                        <label>Username</label>
+                        <input type="text" name="Username" />
+                        <!--checked de gebruikersnaam-->
+                        @Html.ValidationMessage("Username")
+                    </div>
 
-            <div>
-                <label>Password</label>
-                <input type="password" name="Password" />
-                @Html.ValidationMessage("Password")
-            </div>
+                    <div>
+                        <label>Password</label>
+                        <input type="password" name="Password" />
+                        <!--checked het wachtwoord-->
+                        @Html.ValidationMessage("Password")
+                    </div>
+                    <!--Login button-->
+                    <button>Login</button>
+                </fieldset>
+            </form>
 
-            <button>Login</button>
-        </fieldset>
-    </form>
-    
-    </div>
         </div>
-   </body>
+    </div>
+</body>
 </html>
