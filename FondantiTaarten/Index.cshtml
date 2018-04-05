@@ -205,22 +205,21 @@
                                 <option value="Gluten Vrij">Gluten Vrij </option>
                                 <option value="Anders">Anders, namelijk...</option>
                             </select>
-                        </div>
-                        <div id="inputAllergieen" style="display: none">
-                            <input type="text" class="form-control" name="inputAllergieenForm" placeholder="Voer uw allergie in" value="@Request.Form["inputAllergieenForm"]" />
-                        </div>
-                        <script>
-                            function myallergieen() {
-                                var x = document.getElementById("Allergieen").value;
-                                if (x == "Anders") {
-                                    inputAllergieen.style.display = "block"
+                            <div id="inputAllergieen" style="display: none">
+                                <input type="text" class="form-control" name="inputAllergieenForm" placeholder="Voer uw allergie in" value="@Request.Form["inputAllergieenForm"]" />
+                            </div>
+                            <script>
+                                function myallergieen() {
+                                    var x = document.getElementById("Allergieen").value;
+                                    if (x == "Anders") {
+                                        inputAllergieen.style.display = "block"
+                                    }
+                                    else {
+                                        inputAllergieen.style.display = "none"
+                                    }
                                 }
-                                else {
-                                    inputAllergieen.style.display = "none"
-                                }
-                            }
-                        </script>
-
+                            </script>
+                        </div>
                         <!-- Dit is de bereken knop en gooit alle keuzes van de dropdown menu's bij elkaar en berekent de prijs, en zet dat vervolgens achter het euroteken. -->
                         <div class="form-group">
                             <div class="container">
