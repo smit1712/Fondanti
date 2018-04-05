@@ -9,6 +9,8 @@
     string allergieen = Session["Allergieen"] as string;
     string price = Session["Sprice"] as string;
 
+    string required = "required";
+
     if (Request["naam"] == null) { Session["naam"] = Session["naam"]; } else { Session["naam"] = Request["naam"]; }
     if (Request["achternaam"] == null) { Session["achternaam"] = Session["achternaam"]; } else { Session["achternaam"] = Request["achternaam"]; }
     if (Request["Email"] == null) { Session["Email"] = Session["Email"]; } else { Session["Email"] = Request["Email"]; }
@@ -33,7 +35,7 @@
     if (IsPost)
     {
 
-
+        required = "";
 
         //hier wordt de mail gemaakt
         WebImage photo = WebImage.GetImageFromRequest();
@@ -132,54 +134,54 @@
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="naam" placeholder="@naam">
+                                        <input type="text" class="form-control" @required name="naam" placeholder="@naam">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="achternaam" placeholder="@achternaam">
+                                        <input type="text" class="form-control"@required name="achternaam" placeholder="@achternaam">
                                     </div>
                                 </div>
                             </div>
 
                             <!--Input Email-->
                             <div class="form-group">
-                                <input type="text" class="form-control" name="Email" placeholder="@Email">
+                                <input type="text" class="form-control" @required name="Email" placeholder="@Email">
                             </div>
 
                             <!--Input Telefoonnummer-->
                             <div class="form-group">
-                                <input type="text" class="form-control" name="Tlnummer" placeholder="@Tlnummer">
+                                <input type="text" class="form-control"@required name="Tlnummer" placeholder="@Tlnummer">
                             </div>
 
                             <!--Input Adres, Huisnummer en Postcode achter elkaar-->
                             <div class="form-row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="Adres" placeholder="@Adres">
+                                        <input type="text" class="form-control"@required name="Adres" placeholder="@Adres">
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="Huisnummer" placeholder="@Huisnummer">
+                                        <input type="text" class="form-control"@required name="Huisnummer" placeholder="@Huisnummer">
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="Postcode" placeholder="@Postcode">
+                                        <input type="text" class="form-control"@required name="Postcode" placeholder="@Postcode">
                                     </div>
                                 </div>
                                 <fieldset>
                                     <legend> Extra taart informatie</legend>
-                                    <label for="Image">Heeft u een voorbeeld foto?</label>
+                                    <label for="Image">Voeg hier optioneel een voorbeeld foto toe:</label>
                                     <input type="file" name="Image" />
                                 </fieldset>
 
                                 <div class="form-group">
-                                    <div class='input-group date' id='datetimepicker2'>
-                                        <input type='date' name="DateTime" value="@date" class="form-control" />
+                                    <div class='input-group date'  id='datetimepicker2'>
+                                        <input type='date' name="DateTime" @required value="@date" class="form-control" />
                                         <label for="DateTime">Voor wanneer is de taart</label>
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
