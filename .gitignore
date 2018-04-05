@@ -68,7 +68,6 @@ artifacts/
 *.pidb
 *.svclog
 *.scc
-*.mdf
 
 # Chutzpah Test files
 _Chutzpah*
@@ -192,6 +191,7 @@ ClientBin/
 *.jfm
 *.pfx
 *.publishsettings
+*.mdf
 node_modules/
 orleans.codegen.cs
 
