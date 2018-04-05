@@ -27,6 +27,8 @@
         if (Request["Bekleding"] == null) { Session["Bekleding"] = Session["Bekleding"]; } else { Session["Bekleding"] = Request["Bekleding"]; }
         if (Request["Decoratie"] == null) { Session["Decoratie"] = Session["Decoratie"]; } else { Session["Decoratie"] = Request["Decoratie"]; }
         if (Request["Allergieen"] == null) { Session["Allergieen"] = Session["Allergieen"]; } else { Session["Allergieen"] = Request["Allergieen"]; }
+        if (Request["inputAllergieenForm"] == null) { Session["inputAllergieenForm"] = Session["inputAllergieenForm"]; } else { Session["inputAllergieenForm"] = Request["inputAllergieenForm"]; }
+
 
         // de variable worden gevuld met of de sessie of wat in de form stond
         personen = Session["Personen"] as string;
@@ -35,7 +37,15 @@
         vulling = Session["Vulling"] as string;
         Bekleding = Session["Bekleding"] as string;
         decoratie = Session["Decoratie"] as string;
-        allergieen = Session["Allergieen"] as string;
+        if (Request["inputAllergieenForm"] != null)
+        {
+            allergieen = Session["inputAllergieenForm"] as string;
+            Session["Allergieen"] = Session["inputAllergieenForm"];
+        }
+        else
+        {
+            allergieen = Session["Allergieen"] as string;
+        }
 
         // variable personen wordt gekopieerd naar een Int en String
         ipersonen = Convert.ToInt32(personen);
@@ -193,11 +203,11 @@
                                 <option disabled selected value="@allergieen">@allergieen</option>
                                 <option value="Geen">Geen</option>
                                 <option value="Gluten Vrij">Gluten Vrij </option>
-                                <option value="Anders">Anders namelijk...</option>
+                                <option value="Anders">Anders, namelijk...</option>
                             </select>
                         </div>
                         <div id="inputAllergieen" style="display: none">
-                            <input type="text" class="form-control" placeholder="Voer uw allergie in" value="@Request.Form["inputAllergieenForm"]" />
+                            <input type="text" class="form-control" name="inputAllergieenForm" placeholder="Voer uw allergie in" value="@Request.Form["inputAllergieenForm"]" />
                         </div>
                         <script>
                             function myallergieen() {

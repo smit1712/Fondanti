@@ -1,10 +1,12 @@
 ﻿@using WebMatrix.WebData
 @{
+    //Alleen toegang als de gebruiker ingelogd is
     WebSecurity.RequireAuthenticatedUser();
+    //database wordt geopend
     Database db = Database.Open("FondantiDataBase");
-
+    // Met één sql Query wordt alle informatie opgevraagd die nodig is
     dynamic dbquery = db.Query("select * from Ingredienten");
-
+    // de variable worden gevuld met de prijs van de ingredienten
     string PriceChocolade = Convert.ToString(dbquery[0].prijs);
     string PriceKindervulling = Convert.ToString(dbquery[1].prijs);
     string Pricefondant = Convert.ToString(dbquery[2].prijs);
@@ -21,7 +23,7 @@
     string PriceUitgebreid = Convert.ToString(dbquery[13].prijs);
     string priceAndersThema = Convert.ToString(dbquery[14].prijs);
 
-
+    //Nadat er op de submit knop gedrukt is wordt, dan wordt de database bij gewerkt en de pagina gerefreshed
     if (IsPost)
     {
         int count = 0;
@@ -31,12 +33,7 @@
             count++;
         }
         Response.Redirect("~/Admin/AdminPage.cshtml");
-
     }
-
-
-
-
     db.Close();
 }
 
@@ -51,94 +48,101 @@
     <!-- Render Shared Navbar-->
     @RenderPage("~/_Shared/_Navbar.cshtml")
     <form method="post">
-        <div class="container" style="margin-top: 20px;">
-            <div class="koptekst">
-                <h4>
-                    Prijs Thema p.p.
-                </h4>
+            <div class="container" style="margin-top: 20px;">
+                <div class="koptekst">
+                    <h4>
+                        Prijs Thema p.p.
+                    </h4>
+                </div>
             </div>
-        </div>
-   
-        <div class="container" style="margin-top: 10px">
-            <div class="container">
-                <div class="row">
-                    <div class="form-inline" style="width: 600px">
-                        <div class="col-md-6">
-                            <div class="voorkop">
-                                <p>Verjaardag volwassene</p>
+            <!--Hierin kan je de prijzen per Thema p.p. aanpassen-->
+            <div class="container" style="margin-top: 10px">
+
+                <!--Hierin kan je de prijzen voor Verjaardag volwassene aanpassen-->
+                <div class="container">
+                    <div class="row">
+                        <div class="form-inline" style="width: 600px">
+                            <div class="col-md-6">
+                                <div class="voorkop">
+                                    <p>Verjaardag volwassene</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">€</span>
+                                    </div>
+                                    <input type="number" name="Verjaardag volwassene" class="form-control" value="@priceVerjaardagVolwassene" min="0" step="0.01" style="text-align: center ">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">€</span>
+                    </div>
+                </div>
+
+                <!--Hierin kan je de prijzen voor Verjaardag kind aanpassen-->
+                <div class="container">
+                    <div class="row">
+                        <div class="form-inline" style="width: 600px">
+                            <div class="col-md-6">
+                                <div class="voorkop">
+                                    <p>verjaardagKind</p>
                                 </div>
-                                <input type="number" name="Verjaardag volwassene" class="form-control" value="@priceVerjaardagVolwassene" min="0" step="0.01" style="text-align: center ">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">€</span>
+                                    </div>
+                                    <input type="number" name="Verjaardag kind" class="form-control" value="@priceverjaardagKind" min="0" step="0.01" style="text-align: center ">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Hierin kan je de prijzen voor Bruiloft aanpassen-->
+                <div class="container">
+                    <div class="row">
+                        <div class="form-inline" style="width: 600px">
+                            <div class="col-md-6">
+                                <div class="voorkop">
+                                    <p>bruiloft</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">€</span>
+                                    </div>
+                                    <input type="number" name="bruiloft" class="form-control" value="@Pricebruiloft" min="0" step="0.01" style="text-align: center ">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Hierin kan je de prijzen voor Anders aanpassen-->
+                <div class="container">
+                    <div class="row">
+                        <div class="form-inline" style="width: 600px">
+                            <div class="col-md-6">
+                                <div class="voorkop">
+                                    <p>Anders</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">€</span>
+                                    </div>
+                                    <input type="number" name="Anders" class="form-control" value="@priceAndersThema" min="0" step="0.01" style="text-align: center ">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="container">
-                <div class="row">
-                    <div class="form-inline" style="width: 600px">
-                        <div class="col-md-6">
-                            <div class="voorkop">
-                                <p>verjaardagKind</p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">€</span>
-                                </div>
-                                <input type="number" name="Verjaardag kind" class="form-control" value="@priceverjaardagKind" min="0" step="0.01" style="text-align: center ">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container">
-                <div class="row">
-                    <div class="form-inline" style="width: 600px">
-                        <div class="col-md-6">
-                            <div class="voorkop">
-                                <p>bruiloft</p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">€</span>
-                                </div>
-                                <input type="number" name="bruiloft" class="form-control" value="@Pricebruiloft" min="0" step="0.01" style="text-align: center ">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="form-inline" style="width: 600px">
-                        <div class="col-md-6">
-                            <div class="voorkop">
-                                <p>Anders</p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">€</span>
-                                </div>
-                                <input type="number" name="Anders" class="form-control" value="@priceAndersThema" min="0" step="0.01" style="text-align: center ">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
             <div class="container" style="margin-top: 20px;">
                 <div class="koptekst">
                     <h4>
@@ -146,7 +150,9 @@
                     </h4>
                 </div>
             </div>
+            <!--Hierin kan je de prijzen per Cake p.p. aanpassen-->
             <div class="container" style="margin-top: 10px">
+                <!--Hierin kan je de prijzen voor Chocolade aanpassen-->
                 <div class="container">
                     <div class="row">
                         <div class="form-inline" style="width: 600px">
@@ -167,6 +173,7 @@
                     </div>
                 </div>
 
+                <!--Hierin kan je de prijzen voor Red velvet aanpassen-->
                 <div class="container">
                     <div class="row">
                         <div class="form-inline" style="width: 600px">
@@ -187,6 +194,7 @@
                     </div>
                 </div>
 
+                <!--Hierin kan je de prijzen voor Biscuit Deeg aanpassen-->
                 <div class="container">
                     <div class="row">
                         <div class="form-inline" style="width: 600px">
@@ -215,7 +223,9 @@
                     </h4>
                 </div>
             </div>
+            <!--Hierin kan je de prijzen per Bekleding p.p. aanpassen-->
             <div class="container" style="margin-top: 10px">
+                <!--Hierin kan je de prijzen voor Fondant aanpassen-->
                 <div class="container">
                     <div class="row">
                         <div class="form-inline" style="width: 600px">
@@ -236,6 +246,7 @@
                     </div>
                 </div>
 
+                <!--Hierin kan je de prijzen voor Marsepein aanpassen-->
                 <div class="container">
                     <div class="row">
                         <div class="form-inline" style="width: 600px">
@@ -265,7 +276,9 @@
                     </h4>
                 </div>
             </div>
+            <!--Hierin kan je de prijzen per Vulling p.p. aanpassen-->
             <div class="container" style="margin-top: 10px">
+                <!--Hierin kan je de prijzen voor Champagne Room met verse frambozen aanpassen-->
                 <div class="container">
                     <div class="row">
                         <div class="form-inline" style="width: 600px">
@@ -286,6 +299,7 @@
                     </div>
                 </div>
 
+                <!--Hierin kan je de prijzen voor Gele room met Oreo vulling aanpassen-->
                 <div class="container">
                     <div class="row">
                         <div class="form-inline" style="width: 600px">
@@ -306,6 +320,7 @@
                     </div>
                 </div>
 
+                <!--Hierin kan je de prijzen voor kindervulling (vruchtencompote en room) aanpassen-->
                 <div class="container">
                     <div class="row">
                         <div class="form-inline" style="width: 600px">
@@ -334,7 +349,9 @@
                     </h4>
                 </div>
             </div>
+            <!--Hierin kan je de prijzen per Niveau Decoratie p.p. aanpassen-->
             <div class="container" style="margin-top: 10px">
+                <!--Hierin kan je de prijzen voor eenvoudig aanpassen-->
                 <div class="container">
                     <div class="row">
                         <div class="form-inline" style="width: 600px">
@@ -355,6 +372,7 @@
                     </div>
                 </div>
 
+                <!--Hierin kan je de prijzen gemiddeld aanpassen-->
                 <div class="container">
                     <div class="row">
                         <div class="form-inline" style="width: 600px">
@@ -375,6 +393,7 @@
                     </div>
                 </div>
 
+                <!--Hierin kan je de prijzen voor uitgebreid aanpassen-->
                 <div class="container">
                     <div class="row">
                         <div class="form-inline" style="width: 600px">
@@ -394,6 +413,8 @@
                         </div>
                     </div>
                 </div>
+
+                <!--Button om alles te submitten-->
                 <div class="row">
                     <button class="btn btn-primary" type="submit" name="submit">verander Prijs</button>
                 </div>
