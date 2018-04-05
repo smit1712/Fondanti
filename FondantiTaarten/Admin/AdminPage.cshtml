@@ -1,10 +1,12 @@
 ﻿@using WebMatrix.WebData
 @{
+    //Alleen toegang als de gebruiker ingelogd is
     WebSecurity.RequireAuthenticatedUser();
+    //database wordt geopend
     Database db = Database.Open("FondantiDataBase");
-
+    // Met één sql Query wordt alle informatie opgevraagd die nodig is
     dynamic dbquery = db.Query("select * from Ingredienten");
-
+    // de variable worden gevuld met de prijs van de ingredienten
     string PriceChocolade = Convert.ToString(dbquery[0].prijs);
     string PriceKindervulling = Convert.ToString(dbquery[1].prijs);
     string Pricefondant = Convert.ToString(dbquery[2].prijs);
@@ -21,7 +23,7 @@
     string PriceUitgebreid = Convert.ToString(dbquery[13].prijs);
     string priceAndersThema = Convert.ToString(dbquery[14].prijs);
 
-
+    //Nadat er op de submit knop gedrukt is wordt, dan wordt de database bij gewerkt en de pagina gerefreshed
     if (IsPost)
     {
         int count = 0;

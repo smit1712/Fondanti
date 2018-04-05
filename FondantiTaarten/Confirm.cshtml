@@ -1,5 +1,5 @@
 ﻿@{
-
+    // de gekozen taart ingredienten worden weer opgevraagd
     string personen = Session["Personen"] as string;
     string thema = Session["Thema"] as string;
     string cake = Session["Cake"] as string;
@@ -8,7 +8,10 @@
     string decoratie = Session["Decoratie"] as string;
     string allergieen = Session["Allergieen"] as string;
     string price = Session["Sprice"] as string;
+    // // omdat ze al ingevuld zijn worden sommige input velden niet meer verplicht 
+    string required = "required";
 
+    //De sessies van de persoonsgegevens worden of vernieuwd of gevuld door de input form als deze ingevuld is
     if (Request["naam"] == null) { Session["naam"] = Session["naam"]; } else { Session["naam"] = Request["naam"]; }
     if (Request["achternaam"] == null) { Session["achternaam"] = Session["achternaam"]; } else { Session["achternaam"] = Request["achternaam"]; }
     if (Request["Email"] == null) { Session["Email"] = Session["Email"]; } else { Session["Email"] = Request["Email"]; }
@@ -19,6 +22,7 @@
     if (Request["DateTime"] == null) { Session["DateTime"] = Session["DateTime"]; } else { Session["DateTime"] = Request["DateTime"]; }
     if (Request["comment"] == null) { Session["comment"] = Session["comment"]; } else { Session["comment"] = Request["comment"]; }
 
+    // de variable worden gevuld met of de sessie of wat in de form stond
     string naam = Session["naam"] as string;
     string achternaam = Session["achternaam"] as string;
     string Email = Session["Email"] as string;
@@ -29,7 +33,7 @@
     string date = Session["DateTime"] as string;
     string comment = Session["comment"] as string;
 
-
+    //De mail wordt verstuurd als er op de verstuur knop gedrukt wordt 
     if (IsPost)
     {
         //hier wordt de mail gemaakt
@@ -48,7 +52,7 @@
             attachedfile = imagePath;
             attachfile = new string[] { attachedfile };
         }
-
+        // indien er geen foto geupload is, wordt de mail zonder bijlagen verstuurd
         if (attachfile[0] == "")
         {
 
@@ -71,6 +75,7 @@
               "opmerkingen" + comment
                 , isBodyHtml: true);
         }
+        // anders wordt hij met bijlagen verstuurd
         else
         {
             WebMail.Send(to: "buzzzerz@live.nl", subject: "Bestelling taart", filesToAttach: attachfile,
@@ -92,7 +97,10 @@
               "opmerkingen" + comment
                 , isBodyHtml: true);
         }
+        // sommige velden zijn niet meer verplicht
+        required = "";
     }
+    // als de mail niet verstuurd wordt, dan worden de velden met de standaard waardes gevuld
     else
     {
         naam = "Naam";
@@ -129,43 +137,43 @@
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="naam" placeholder="@naam">
+                                        <input type="text" class="form-control" @required name="naam" placeholder="@naam">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="achternaam" placeholder="@achternaam">
+                                        <input type="text" class="form-control"@required name="achternaam" placeholder="@achternaam">
                                     </div>
                                 </div>
                             </div>
 
                             <!--Input Email-->
                             <div class="form-group">
-                                <input type="text" class="form-control" name="Email" placeholder="@Email">
+                                <input type="text" class="form-control" @required name="Email" placeholder="@Email">
                             </div>
 
                             <!--Input Telefoonnummer-->
                             <div class="form-group">
-                                <input type="text" class="form-control" name="Tlnummer" placeholder="@Tlnummer">
+                                <input type="text" class="form-control"@required name="Tlnummer" placeholder="@Tlnummer">
                             </div>
 
                             <!--Input Adres, Huisnummer en Postcode achter elkaar-->
                             <div class="form-row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="Adres" placeholder="@Adres">
+                                        <input type="text" class="form-control"@required name="Adres" placeholder="@Adres">
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="Huisnummer" placeholder="@Huisnummer">
+                                        <input type="text" class="form-control"@required name="Huisnummer" placeholder="@Huisnummer">
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="Postcode" placeholder="@Postcode">
+                                        <input type="text" class="form-control"@required name="Postcode" placeholder="@Postcode">
                                     </div>
                                 </div>
                             </div>
