@@ -1,21 +1,37 @@
 ﻿<canvas id="cakeCanvas" width="auto" height="500"></canvas>
 <script type="text/javascript">
+
+    // Deze class kan de taarten tekenen
     class DrawCake {
+
+        // De constructor initialiseert de canvas variabelen
         constructor() {
             this.c = document.getElementById("cakeCanvas");
             this.ctx = this.c.getContext("2d");
         }
 
+        // Hier wordt de zijkant getekent van de taart
         drawSide(x, y, width, height, colorSide, colorTop) {
             width = x + width;
             height = y + height;
 
+            // Startpunt 
             this.ctx.beginPath();
             this.ctx.moveTo(x, y);
+
+            // Teken naar beneden
             this.ctx.lineTo(x, height);
+
+            // Teken een boog naar rechts
             this.ctx.bezierCurveTo(x, height + height / 8, width, height + height / 8, width, height);
+
+            // Teken naar boven
             this.ctx.lineTo(width, y);
+
+            // Teken een boog naar links
             this.ctx.bezierCurveTo(width, y + y / 8, x, y + y / 8, x, y);
+
+            // Geef de taart een kleur
             this.ctx.fillStyle = colorSide;
             this.ctx.strokeStyle = "rgba(20, 20, 20, 0.4)";
 
@@ -27,10 +43,17 @@
         }
 
         drawTop(x, y, width, height, color) {
+
+            // Begin links boven
             this.ctx.beginPath();
             this.ctx.moveTo(x, y);
+
+            // Teken een boog naar rechts
             this.ctx.bezierCurveTo(x, y + y / 8, width, y + y / 8, width, y);
+
+            // Teken een boog terug naar links
             this.ctx.bezierCurveTo(width, y - y / 8, x, y - y / 8, x, y);
+
             this.ctx.fillStyle = color;
             this.ctx.fill();
             this.ctx.stroke();
@@ -40,11 +63,16 @@
         drawFilling(x, y, width, height, color) {
             width = x + width;
             height = y + height;
-            var fillingHeight = y + (height - y) / 2;
-            var bezierHeight = fillingHeight + fillingHeight / 8;
 
+            // Het begin punt waar de lijn moet beginnen
+            var fillingHeight = y + (height - y) / 2;
+            var bezierHeight = fillingHeight + fillingHeight / 8; // De diepte van de boog
+
+            // Plaats de cursor op het midden van de cake
             this.ctx.beginPath();
             this.ctx.moveTo(x, fillingHeight);
+
+            // Teken de boog
             this.ctx.bezierCurveTo(x, bezierHeight, width, bezierHeight, width, fillingHeight);
             this.ctx.lineWidth = 5;
             this.ctx.strokeStyle = color;
@@ -55,21 +83,24 @@
 
         drawLayers(x, y, width, height, layers, colorSide, colorTop, fillColor = "") {
 
+            // Maak het canvas leeg voor het tekenen van een nieuwe cake
             this.resetCanvas();
             for (var i = 0; i < layers; i++) {
                 this.drawSide(
-                    x + width / 8 * i,
-                    y - height * i,
-                    width - width / 4 * i,
+                    x + width / 8 * i, // Zorg dat de taart op de ouwde taart wordt geplaatst
+                    y - height * i, // Zorg dat de taart op de ouwde taart wordt geplaatst
+                    width - width / 4 * i, // Zorg dat de nieuwe taart minder breed wordt en dat de taart er mooi op past
                     height,
                     colorSide, colorTop);
 
+                // Teken de filling als er een kleur wordt meegegeven
                 if (fillColor != "") {
                     this.drawFilling(x + width / 8 * i, y - height * i, width - width / 4 * i, height, fillColor)
                 }
             }
         }
 
+        // Reset de canvas 
         resetCanvas() {
             this.ctx.clearRect(0, 0, this.c.width, this.c.height);
         }
