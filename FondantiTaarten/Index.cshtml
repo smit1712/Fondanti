@@ -14,9 +14,7 @@
     int ipersonen = 0;
     string spersonen = "";
     string sprice = "€";
-    string date = Request["DateTime"];
-    string mail = Request["Mail"];
-
+   
     if (IsPost)
     {
         if (Request["Personen"] == null) { Session["Personen"] = Session["Personen"]; } else { Session["Personen"] = Request["Personen"]; }
@@ -26,8 +24,7 @@
         if (Request["Bekleding"] == null) { Session["Bekleding"] = Session["Bekleding"]; } else { Session["Bekleding"] = Request["Bekleding"]; }
         if (Request["Decoratie"] == null) { Session["Decoratie"] = Session["Decoratie"]; } else { Session["Decoratie"] = Request["Decoratie"]; }
         if (Request["Allergieen"] == null) { Session["Allergieen"] = Session["Allergieen"]; } else { Session["Allergieen"] = Request["Allergieen"]; }
-        if (Request["DateTime"] == null) { Session["DateTime"] = Session["DateTime"]; } else { Session["DateTime"] = Request["DateTime"]; }
-
+        
 
         personen = Session["Personen"] as string;
         thema = Session["Thema"] as string;
@@ -36,7 +33,7 @@
         Bekleding = Session["Bekleding"] as string;
         decoratie = Session["Decoratie"] as string;
         allergieen = Session["Allergieen"] as string;
-        date = Session["DateTime"] as string;
+        
 
         ipersonen = Convert.ToInt32(personen);
         spersonen = personen;
@@ -61,41 +58,7 @@
                 sprice = "";
             }
             Session["Sprice"] = sprice;
-        }
-        if (mail != null)
-        {
-            //hier wordt de mail gemaakt
-            WebImage photo = WebImage.GetImageFromRequest();
-            var newFileName = "";
-            var imagePath = "";
-
-            if (photo != null)
-            {
-                newFileName = Guid.NewGuid().ToString() + "_" +
-                   Path.GetFileName(photo.FileName);
-                imagePath = @"Img\" + newFileName;
-                photo.Save(@"~\" + imagePath);
-            }
-            var attachedfile = imagePath;
-            var attachfile = new string[] { attachedfile };
-
-
-            WebMail.Send(to: "buzzzerz@live.nl", subject: "Bestelling taart", filesToAttach: attachfile,
-                body:
-                Request["DateTime"] + "<br/>" +
-                personen + "<br/>" +
-                thema + "<br/>" +
-                cake + "<br/>" +
-                vulling + "<br/>" +
-                Bekleding + "<br/>" +
-                decoratie + "<br/>" +
-                allergieen + "<br/>" +
-                "€" + price
-                , isBodyHtml: true);
-        }
-
-
-
+        }        
     }
     else
     {
@@ -254,25 +217,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- Dit maakt een submit-file knop aan met een box er naast waar de gekozen bestandsnaam weergegeven wordt. -->
-                        <fieldset @hidden>
-                            <legend> Taart aanvragen</legend>
-                            <label for="Image">Voeg hier optioneel een voorbeeld foto toe:</label>
-                            <input type="file" name="Image" />
-                        </fieldset>
-
-                        <!-- Hier kan de user een datum selecteren voor wanneer de taart afgeleverd moet worden. -->
-                        <div class="form-group" @hidden>
-                            <div class='input-group date' id='datetimepicker2'>
-                                <label for="DateTime">Wanneer wilt u de taart afgeleverd hebben?</label>
-                                <input type='date' name="DateTime" value="@date" class="form-control" />
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
-                        </div>
+                        </div>                    
+                       
 
                         <!-- Met deze knop kan de user zijn/haar keuze submitten naar Fondanti. -->
                         <div class="form-group">
