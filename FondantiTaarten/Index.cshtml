@@ -13,6 +13,7 @@
     int ipersonen = 0;
     string spersonen = "";
     string sprice = "€";
+    string date = Request["DateTime"];
 
     if (IsPost)
     {
@@ -23,6 +24,7 @@
         if (Request["Bekleding"] == null) { Session["Bekleding"] = Session["Bekleding"]; } else { Session["Bekleding"] = Request["Bekleding"]; }
         if (Request["Decoratie"] == null) { Session["Decoratie"] = Session["Decoratie"]; } else { Session["Decoratie"] = Request["Decoratie"]; }
         if (Request["Allergieen"] == null) { Session["Allergieen"] = Session["Allergieen"]; } else { Session["Allergieen"] = Request["Allergieen"]; }
+        if (Request["DateTime"] == null) { Session["DateTime"] = Session["DateTime"]; } else { Session["DateTime"] = Request["DateTime"]; }
 
 
         personen = Session["Personen"] as string;
@@ -32,6 +34,7 @@
         Bekleding = Session["Bekleding"] as string;
         decoratie = Session["Decoratie"] as string;
         allergieen = Session["Allergieen"] as string;
+        date = Session["DateTime"] as string;
 
         ipersonen = Convert.ToInt32(personen);
         spersonen = personen;
@@ -74,7 +77,7 @@
 
         WebMail.Send(to: "buzzzerz@live.nl", subject: "Bestelling taart", filesToAttach: attachfile,
             body:
-            DateTime.Now +
+            Request["DateTime"]+"<br/>"+
             personen+"<br/>"+
             thema+ "<br/>" +
             cake + "<br/>" +
@@ -82,7 +85,7 @@
             Bekleding + "<br/>" +
             decoratie + "<br/>" +
             allergieen + "<br/>" +
-            price
+            "€" + price
             , isBodyHtml: true);
     }
     else
@@ -230,19 +233,13 @@
 
                         <div class="form-group">
                             <div class='input-group date' id='datetimepicker2'>
-                                <input type='date' class="form-control" />
+                                <input type='date' name="DateTime" value="@date" class="form-control" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
                         </div>
-                        <script type="text/javascript">
-                            $(function () {
-                                $('#datetimepicker2').datetimepicker({
-            locale: 'nl'
-                                });
-                            });
-                        </script>
+
                         <div class="form-group">
                             <div class="container">
                                 <div class="row">
