@@ -10,9 +10,12 @@
     string decoratie;
     string allergieen;
     string required = "required";
+    string hidden = "hidden";
     int ipersonen = 0;
     string spersonen = "";
     string sprice = "€";
+    string date = Request["DateTime"];
+    string mail = Request["Mail"];
 
     if (IsPost)
     {
@@ -23,6 +26,7 @@
         if (Request["Bekleding"] == null) { Session["Bekleding"] = Session["Bekleding"]; } else { Session["Bekleding"] = Request["Bekleding"]; }
         if (Request["Decoratie"] == null) { Session["Decoratie"] = Session["Decoratie"]; } else { Session["Decoratie"] = Request["Decoratie"]; }
         if (Request["Allergieen"] == null) { Session["Allergieen"] = Session["Allergieen"]; } else { Session["Allergieen"] = Request["Allergieen"]; }
+        if (Request["DateTime"] == null) { Session["DateTime"] = Session["DateTime"]; } else { Session["DateTime"] = Request["DateTime"]; }
 
 
         personen = Session["Personen"] as string;
@@ -32,7 +36,7 @@
         Bekleding = Session["Bekleding"] as string;
         decoratie = Session["Decoratie"] as string;
         allergieen = Session["Allergieen"] as string;
-
+        date = Session["DateTime"] as string;
 
         ipersonen = Convert.ToInt32(personen);
         spersonen = personen;
@@ -49,6 +53,7 @@
             price = Convert.ToDecimal(prijsthema[0].prijs) + Convert.ToDecimal(prijscake[0].prijs) + Convert.ToDecimal(prijsvulling[0].prijs) + Convert.ToDecimal(prijsbekleding[0].prijs) + Convert.ToDecimal(prijsdecoratie[0].prijs);
             price = price * ipersonen;
             required = null;
+            hidden = null;
             sprice = "€" + price.ToString("##.###");
 
             if (sprice == "€")
@@ -56,35 +61,40 @@
                 sprice = "";
             }
         }
-
-        //hier wordt de mail gemaakt
-        WebImage photo = WebImage.GetImageFromRequest();
-        var newFileName = "";
-        var imagePath = "";
-
-        if (photo != null)
+        if (mail != null)
         {
-            newFileName = Guid.NewGuid().ToString() + "_" +
-               Path.GetFileName(photo.FileName);
-            imagePath = @"Img\" + newFileName;
-            photo.Save(@"~\" + imagePath);
+            //hier wordt de mail gemaakt
+            WebImage photo = WebImage.GetImageFromRequest();
+            var newFileName = "";
+            var imagePath = "";
+
+            if (photo != null)
+            {
+                newFileName = Guid.NewGuid().ToString() + "_" +
+                   Path.GetFileName(photo.FileName);
+                imagePath = @"Img\" + newFileName;
+                photo.Save(@"~\" + imagePath);
+            }
+            var attachedfile = imagePath;
+            var attachfile = new string[] { attachedfile };
+
+
+            WebMail.Send(to: "buzzzerz@live.nl", subject: "Bestelling taart", filesToAttach: attachfile,
+                body:
+                Request["DateTime"] + "<br/>" +
+                personen + "<br/>" +
+                thema + "<br/>" +
+                cake + "<br/>" +
+                vulling + "<br/>" +
+                Bekleding + "<br/>" +
+                decoratie + "<br/>" +
+                allergieen + "<br/>" +
+                "€" + price
+                , isBodyHtml: true);
         }
-        var attachedfile = imagePath;
-        var attachfile = new string[] { attachedfile };
 
 
-        WebMail.Send(to: "buzzzerz@live.nl", subject: "Bestelling taart", filesToAttach: attachfile,
-            body:
-            DateTime.Now +
-            personen+"<br/>"+
-            thema+ "<br/>" +
-            cake + "<br/>" +
-            vulling + "<br/>" +
-            Bekleding + "<br/>" +
-            decoratie + "<br/>" +
-            allergieen + "<br/>" +
-            price
-            , isBodyHtml: true);
+
     }
     else
     {
@@ -135,7 +145,7 @@
                     <form method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <select class="form-control" id="Grootte" name="Personen" @required>
-                                <option disabled selected value="@spersonen" >@personen</option>
+                                <option disabled selected value="@spersonen">@personen</option>
                                 <option value="15">1 < 15</option>
                                 <option value="30">15 < 30</option>
                                 <option value="45">30 < 45 </option>
@@ -158,10 +168,10 @@
                                     var x = document.getElementById("Thema").value;
                                     if (x == "Anders") {
                                         inputThema.style.display = "block"
-                                                            }
+                                    }
                                     else {
                                         inputThema.style.display = "none"
-                                                            }
+                                    }
                                 }
                             </script>
                         </div>
@@ -176,7 +186,7 @@
                         </div>
 
                         <div class="form-group">
-                            <select class="form-control" name="Vulling" id="Vulling"@required>
+                            <select class="form-control" name="Vulling" id="Vulling" @required>
                                 <option disabled selected value="@vulling">@vulling</option>
                                 <option value="Kindervulling (vruchtencompote en room)">Kindervulling (vruchtencompote en room)</option>
                                 <option value="Gele room met Oreo vulling">Gele room met Oreo vulling</option>
@@ -185,7 +195,7 @@
                         </div>
 
                         <div class="form-group">
-                            <select class="form-control" name="Bekleding" id="Bekleding"@required>
+                            <select class="form-control" name="Bekleding" id="Bekleding" @required>
                                 <option disabled selected value="@Bekleding">@Bekleding</option>
                                 <option value="Fondant">Fondant</option>
                                 <option value="Marsepein">Marsepein</option>
@@ -193,7 +203,7 @@
                         </div>
 
                         <div class="form-group">
-                            <select class="form-control" name="Decoratie" id="Decoratie"@required>
+                            <select class="form-control" name="Decoratie" id="Decoratie" @required>
                                 <option disabled selected value="@decoratie">@decoratie</option>
                                 <option value="Eenvoudig">Eenvoudig</option>
                                 <option value="Gemiddeld">Gemiddeld</option>
@@ -202,67 +212,63 @@
                         </div>
 
                         <div class="form-group">
-                            <select class="form-control" id="Allergieen" name="Allergieen" onchange="myallergieen()"@required>
+                            <select class="form-control" id="Allergieen" name="Allergieen" onchange="myallergieen()" @required>
                                 <option disabled selected value="@allergieen">@allergieen</option>
                                 <option value="Geen">Geen</option>
                                 <option value="Gluten Vrij">Gluten Vrij </option>
                                 <option value="Anders">Anders namelijk...</option>
                             </select>
+                        </div>
                             <div id="inputAllergieen" style="display: none">
                                 <input type="text" class="form-control" placeholder="Voer uw allergie in" value="@Request.Form["inputAllergieenForm"]" />
                             </div>
                             <script>
                                 function myallergieen() {
-                                var x = document.getElementById("Allergieen").value;
-                                if (x == "Anders") {
-                                    inputAllergieen.style.display = "block"
-                                                        }
-                                else {
-                                    inputAllergieen.style.display = "none"
-                                                        }
+                                    var x = document.getElementById("Allergieen").value;
+                                    if (x == "Anders") {
+                                        inputAllergieen.style.display = "block"
+                                    }
+                                    else {
+                                        inputAllergieen.style.display = "none"
+                                    }
                                 }
                             </script>
-                        </div>
-                        <fieldset>
-                            <legend> Upload Image </legend>
-                            <label for="Image">Image</label>
-                            <input type="file" name="Image" />                                               
-                        </fieldset>
-
-                        <div class="form-group">
-                            <div class='input-group date' id='datetimepicker2'>
-                                <input type='date' class="form-control" />
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
-                        </div>
-                        <script type="text/javascript">
-                            $(function () {
-                                $('#datetimepicker2').datetimepicker({
-                                 locale: 'nl'
-                                });
-                            });
-                        </script>
-                        <div class="form-group">
-                            <div class="container">
-                                <div class="row">
-                                    <button class="btn btn-primary" id="submit" type="submit" name="submit" onclick="submit()" >Bereken Prijs</button>
-                                    
-                                    <div class="col-md-3">
-                                        <div class="price">
-                                            @sprice
-                                        </div>
-                                    </div>
-                                    <div id="myconfirm" style="display: none">
-                                        <button class="btn btn-primary ml-auto" type="button" name="confirm">Confirm</button>
+                            <div class="row">
+                                <button class="btn btn-primary" id="submit" type="submit" name="submit" onclick="submit()">Bereken Prijs</button>
+                                <div class="col-md-3">
+                                    <div class="price">
+                                        @sprice
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
-                        <script type="text/javascript" src="~/Scripts/GetInput.js"></script>
-                    </form>
+                            <fieldset @hidden>
+                                <legend> Taart aanvragen</legend>
+                                <label for="Image">Heeft u een voorbeeld foto?</label>
+                                <input type="file" name="Image" />
+                            </fieldset>
+
+                            <div class="form-group" @hidden>
+                                <div class='input-group date' id='datetimepicker2'>
+                                    <input type='date' name="DateTime" value="@date" class="form-control" />
+                                    <label for="DateTime">Voor wanneer is de taart</label>
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="container">
+                                    <div class="row">
+                                        <div id="myconfirm" @hidden>
+                                            <button class="btn btn-primary ml-auto" type="submit" value="Mail" name="Mail">Mail taart naar Fondanti</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+                            <script type="text/javascript" src="~/Scripts/GetInput.js"></script>
+                     </form>
                 </div>
             </div>
         </div>
