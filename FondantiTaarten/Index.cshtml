@@ -111,7 +111,7 @@
             break;
     }
     db.Close();
-    }
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -215,14 +215,14 @@
                             </div>
                             <script>
                                 function myallergieen() {
-            var x = document.getElementById("Allergieen").value;
-            if (x == "Anders") {
-                inputAllergieen.style.display = "block"
-                                    }
-            else {
-                inputAllergieen.style.display = "none"
-                                    }
-        }
+                                var x = document.getElementById("Allergieen").value;
+                                if (x == "Anders") {
+                                    inputAllergieen.style.display = "block"
+                                                        }
+                                else {
+                                    inputAllergieen.style.display = "none"
+                                                        }
+                                }
                             </script>
                         </div>
                         <fieldset>
@@ -243,11 +243,15 @@
                         <div class="form-group">
                             <div class="container">
                                 <div class="row">
-                                    <button class="btn btn-primary" type="submit" name="submit">Bereken Prijs</button>
-                                    <div class="col-md-5 col-md-offset-6">
-                                        <div class="price" style="position: relative; float: left;top: 50%;left: 50%;transform: translate(-50%, -50%);">
+                                    <button class="btn btn-primary" id="submit" type="submit" name="submit" onclick="submit()" >Bereken Prijs</button>
+                                    
+                                    <div class="col-md-3">
+                                        <div class="price">
                                             @sprice
                                         </div>
+                                    </div>
+                                    <div id="myconfirm" style="display: none">
+                                        <button class="btn btn-primary ml-auto" type="button"  name="confirm">Confirm</button>
                                     </div>
                                 </div>
                             </div>
