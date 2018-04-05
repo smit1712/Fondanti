@@ -153,7 +153,7 @@
                             </select>
                         </div>
 
-                        <!-- Dit maakt een dropdown menu voor het thema van de taart, en als er "anders" gekozen wordt komt er een extra tekst veld bij voor eigen input -->
+                        <!-- Dit maakt een dropdown menu voor het thema van de taart, en als er "anders" gekozen wordt komt er een extra tekst veld bij voor eigen input. -->
                         <div class="form-group">
                             <select class="form-control" id="Thema" name="Thema" onchange="mythema()" @required>
                                 <option disabled selected value="@thema">@thema</option>
@@ -262,18 +262,18 @@
                             <input type="file" name="Image" />
                         </fieldset>
 
-                        <!-- Hier kan de user een datum selecteren voor wanneer de taart afgeleverd moet worden-->
+                        <!-- Hier kan de user een datum selecteren voor wanneer de taart afgeleverd moet worden. -->
                         <div class="form-group" @hidden>
                             <div class='input-group date' id='datetimepicker2'>
-                                <input type='date' name="DateTime" value="@date" class="form-control" />
                                 <label for="DateTime">Wanneer wilt u de taart afgeleverd hebben?</label>
+                                <input type='date' name="DateTime" value="@date" class="form-control" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
                         </div>
 
-                        <!-- Met deze knop kan de user zijn/haar keuze submitten naar Fondanti.-->
+                        <!-- Met deze knop kan de user zijn/haar keuze submitten naar Fondanti. -->
                         <div class="form-group">
                             <div class="container">
                                 <div class="row">
