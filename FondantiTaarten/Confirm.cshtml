@@ -1,5 +1,114 @@
 ﻿@{
-    
+
+    string personen = Session["Personen"] as string;
+    string thema = Session["Thema"] as string;
+    string cake = Session["Cake"] as string;
+    string vulling = Session["Vulling"] as string;
+    string Bekleding = Session["Bekleding"] as string;
+    string decoratie = Session["Decoratie"] as string;
+    string allergieen = Session["Allergieen"] as string;
+    string price = Session["Sprice"] as string;
+
+    string required = "required";
+
+    if (Request["naam"] == null) { Session["naam"] = Session["naam"]; } else { Session["naam"] = Request["naam"]; }
+    if (Request["achternaam"] == null) { Session["achternaam"] = Session["achternaam"]; } else { Session["achternaam"] = Request["achternaam"]; }
+    if (Request["Email"] == null) { Session["Email"] = Session["Email"]; } else { Session["Email"] = Request["Email"]; }
+    if (Request["Tlnummer"] == null) { Session["Tlnummer"] = Session["Tlnummer"]; } else { Session["Tlnummer"] = Request["Tlnummer"]; }
+    if (Request["Adres"] == null) { Session["Adres"] = Session["Adres"]; } else { Session["Adres"] = Request["Adres"]; }
+    if (Request["Huisnummer"] == null) { Session["Huisnummer"] = Session["Huisnummer"]; } else { Session["Huisnummer"] = Request["Huisnummer"]; }
+    if (Request["Postcode"] == null) { Session["Postcode"] = Session["Postcode"]; } else { Session["Postcode"] = Request["Postcode"]; }
+    if (Request["DateTime"] == null) { Session["DateTime"] = Session["DateTime"]; } else { Session["DateTime"] = Request["DateTime"]; }
+    if (Request["comment"] == null) { Session["comment"] = Session["comment"]; } else { Session["comment"] = Request["comment"]; }
+
+    string naam = Session["naam"] as string;
+    string achternaam = Session["achternaam"] as string;
+    string Email = Session["Email"] as string;
+    string Tlnummer = Session["Tlnummer"] as string;
+    string Adres = Session["Adres"] as string;
+    string Huisnummer = Session["Huisnummer"] as string;
+    string Postcode = Session["Postcode"] as string;
+    string date = Session["DateTime"] as string;
+    string comment = Session["comment"] as string;
+
+
+    if (IsPost)
+    {
+
+        required = "";
+
+        //hier wordt de mail gemaakt
+        WebImage photo = WebImage.GetImageFromRequest();
+        var newFileName = "";
+        var imagePath = "";
+        var attachedfile = "";
+        string[] attachfile = { "" } ;
+
+        if (photo != null)
+        {
+            newFileName = Guid.NewGuid().ToString() + "_" +
+               Path.GetFileName(photo.FileName);
+            imagePath = @"Img\" + newFileName;
+            photo.Save(@"~\" + imagePath);
+            attachedfile = imagePath;
+            attachfile = new string[] { attachedfile };
+        }
+
+        if (attachfile[0] == "")
+        {
+
+            WebMail.Send(to: "buzzzerz@live.nl", subject: "Bestelling taart",
+                body:
+              "personen:" + personen + "<br/>" +
+               "thema:" + thema + "<br/>" +
+               "cake:" + cake + "<br/>" +
+                "vulling:" + vulling + "<br/>" +
+              "bekleding:" + Bekleding + "<br/>" +
+              "decoratie:" + decoratie + "<br/>" +
+              "allergieen:" + allergieen + "<br/>" +
+               "Gewenste datum:" + Request["DateTime"] + "<br/>" +
+               "Prijs:" + price + "<br/>" +
+              "Naam:" + naam + " " +
+                achternaam + "<br/>" +
+               "Email:" + Email + "<br/>" +
+              "telefoonNummer:" + Tlnummer + "<br/>" +
+               "adres:" + Adres + " " + Huisnummer + " " + Postcode + "<br/>" +
+              "opmerkingen" + comment
+                , isBodyHtml: true);
+        }
+        else
+        {
+            WebMail.Send(to: "buzzzerz@live.nl", subject: "Bestelling taart", filesToAttach: attachfile,
+                body:
+              "personen:" + personen + "<br/>" +
+               "thema:" + thema + "<br/>" +
+               "cake:" + cake + "<br/>" +
+                "vulling:" + vulling + "<br/>" +
+              "bekleding:" + Bekleding + "<br/>" +
+              "decoratie:" + decoratie + "<br/>" +
+              "allergieen:" + allergieen + "<br/>" +
+               "Gewenste datum:" + Request["DateTime"] + "<br/>" +
+               "Prijs:" + price + "<br/>" +
+              "Naam:" + naam + " " +
+                achternaam + "<br/>" +
+               "Email:" + Email + "<br/>" +
+              "telefoonNummer:" + Tlnummer + "<br/>" +
+               "adres:" + Adres + " " + Huisnummer + "" + Postcode + "<br/>" +
+              "opmerkingen" + comment
+                , isBodyHtml: true);
+        }
+    }
+    else
+    {
+        naam = "Naam";
+        achternaam = "Achternaam";
+        Email = "Email";
+        Tlnummer = "TLnummer";
+        Adres = "Adres";
+        Huisnummer = "Huisnummer";
+        Postcode = "Postcode";
+        comment = "";
+    }
 }
 
 <!DOCTYPE html> 
@@ -7,66 +116,93 @@
 <head>
     <!-- Render Shared Header-->
     @RenderPage("~/_Shared/_Header.cshtml")
+    <link rel="stylesheet" href="~/Confirm.css" />
 </head>
 <body>
     <!-- Render Shared Navbar-->
     @RenderPage("~/_Shared/_Navbar.cshtml")
-    <div class="container"  style="margin-top: 20px">
+    <div class="container" style="margin-top: 20px">
         <div class="row">
+            <!--In deze class moet de klant zijn gegevens invullen en dit komt aan de linker kant van de pagina te staan-->
             <div class="col-md-6">
-                <form>
+                <!--In deze form kunnen klanten hun gegevens vullen-->
+                <form method="post" enctype="multipart/form-data">
                     <div class="gegevens">
                         <div class="container">
                             <h2>Gegevens</h2>
+                            <!--Input Naam, Achternaam achter elkaar-->
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="naam" placeholder="Naam">
+                                        <input type="text" class="form-control" @required name="naam" placeholder="@naam">
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="achternaam" placeholder="Achternaam">
+                                        <input type="text" class="form-control"@required name="achternaam" placeholder="@achternaam">
                                     </div>
                                 </div>
                             </div>
+
+                            <!--Input Email-->
                             <div class="form-group">
-                                <input type="text" class="form-control" id="Email" placeholder="Email">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="Tlnummer" placeholder="Telefoon nummer">
+                                <input type="text" class="form-control" @required name="Email" placeholder="@Email">
                             </div>
 
+                            <!--Input Telefoonnummer-->
+                            <div class="form-group">
+                                <input type="text" class="form-control"@required name="Tlnummer" placeholder="@Tlnummer">
+                            </div>
+
+                            <!--Input Adres, Huisnummer en Postcode achter elkaar-->
                             <div class="form-row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="Adres" placeholder="Adres">
+                                        <input type="text" class="form-control"@required name="Adres" placeholder="@Adres">
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="Huisnummer" placeholder="Huisnummer">
+                                        <input type="text" class="form-control"@required name="Huisnummer" placeholder="@Huisnummer">
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="Postcode" placeholder="Postcode">
+                                        <input type="text" class="form-control"@required name="Postcode" placeholder="@Postcode">
                                     </div>
+                                </div>
+                                <fieldset>
+                                    <legend> Extra taart informatie</legend>
+                                    <label for="Image">Heeft u een voorbeeld foto?</label>
+                                    <input type="file" name="Image" />
+                                </fieldset>
+
+                                <div class="form-group">
+                                    <div class='input-group date'  id='datetimepicker2'>
+                                        <input type='date' name="DateTime" @required value="@date" class="form-control" />
+                                        <label for="DateTime">Voor wanneer is de taart</label>
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <button class="btn btn-primary" id="submit" type="submit" name="submit">Verstuur</button>
                                 </div>
                             </div>
+
                         </div>
-
+                    </div>
+                    <!--In deze class kan de klant opmerking invullen en dit komt aan de rechter kant van de pagina te staan-->
+                    <div class="col-md-6">
+                        <h2>Opmerking</h2>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="8" name="comment" placeholder="@comment"></textarea>
+                        </div>
                     </div>
                 </form>
-            </div>
-            <div class="col-md-6">
-                <h2>Opmerking</h2>
-                <div class="form-group">
-                    <textarea class="form-control" rows="8" id="comment"></textarea>
-                </div>
             </div>
         </div>
     </div>
