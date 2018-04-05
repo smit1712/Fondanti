@@ -60,6 +60,7 @@
             {
                 sprice = "";
             }
+            Session["Sprice"] = sprice;
         }
         if (mail != null)
         {
@@ -241,34 +242,19 @@
                                     </div>
                                 </div>
                             </div>
-                            <fieldset @hidden>
-                                <legend> Taart aanvragen</legend>
-                                <label for="Image">Heeft u een voorbeeld foto?</label>
-                                <input type="file" name="Image" />
-                            </fieldset>
-
-                            <div class="form-group" @hidden>
-                                <div class='input-group date' id='datetimepicker2'>
-                                    <input type='date' name="DateTime" value="@date" class="form-control" />
-                                    <label for="DateTime">Voor wanneer is de taart</label>
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                                </div>
-                            </div>
 
                             <div class="form-group">
                                 <div class="container">
                                     <div class="row">
                                         <div id="myconfirm" @hidden>
-                                            <button class="btn btn-primary ml-auto" type="submit" value="Mail" name="Mail">Mail taart naar Fondanti</button>
+                                            <a href="~/Confirm.cshtml" Class="btn btn-info" role="button">Mail taart naar Fondanti</a>                                            
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
                             <script type="text/javascript" src="~/Scripts/GetInput.js"></script>
-                     </form>
+                      </form>
                 </div>
             </div>
         </div>
