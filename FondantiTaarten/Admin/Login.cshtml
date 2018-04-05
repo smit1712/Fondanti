@@ -27,12 +27,8 @@
         {
             returnurl = Href("~/Admin/AdminPage.cshtml");
         }
-
-
         if (Validation.IsValid())
         {
-
-
             if (WebSecurity.UserExists(Username) && WebSecurity.GetPasswordFailuresSinceLastSuccess(Username) >= 4 && WebSecurity.GetLastPasswordFailureDate(Username).AddMinutes(2) > DateTime.UtcNow)
             {
                 Response.Redirect("~/Admin/AccountLockedOut");
@@ -98,7 +94,6 @@
                     <button>Login</button>
                 </fieldset>
             </form>
-
         </div>
     </div>
 </body>

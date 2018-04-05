@@ -45,13 +45,11 @@ class GetInput {
             // Zet de kleur naar wit
             this.color = "#ffffff";
         }
-
         this.drawCake.drawLayers(0, 300, this.width, this.height, this.layers, this.color, this.color, this.colorFill);
     }
 
     // Deze methode pakt de type cake
     GetType(value) {
-
         switch (value) {
             case "Biscuit Deeg":
                 this.colorType = "#D19A57";
@@ -72,7 +70,6 @@ class GetInput {
             this.width = 300;
             this.heught = 100;
         }
-
         // Alse de bekleding niet gezet is word de kleur gelijk aan het type cake
         if (this.colorCover == null) {
             this.color = this.colorType;
@@ -97,7 +94,6 @@ class GetInput {
                 this.colorFill = "#FAECAE";
                 break;
         }
-
         // Als de taart geen bekleding heeft mag de taart worden getekend met de vulling
         if (this.colorCover != null) {
             this.colorFill = "";

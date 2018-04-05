@@ -59,7 +59,6 @@
         dynamic prijsbekleding = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", Bekleding);
         dynamic prijsdecoratie = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", decoratie);
 
-
         price = Convert.ToDecimal(prijsthema[0].prijs) + Convert.ToDecimal(prijscake[0].prijs) + Convert.ToDecimal(prijsvulling[0].prijs) + Convert.ToDecimal(prijsbekleding[0].prijs) + Convert.ToDecimal(prijsdecoratie[0].prijs);
         price = price * ipersonen;
         sprice = "€" + price.ToString("##.###");
