@@ -1,6 +1,7 @@
 ﻿@using WebMatrix.WebData
 
 @{
+    // Er wordt verbinding gemaakt met de database en de belangerijkste variablen worden gedeclareerd
     Database db = Database.Open("FondantiDataBase");
     string personen;
     string thema;
@@ -14,9 +15,11 @@
     int ipersonen = 0;
     string spersonen = "";
     string sprice = "€";
-   
+
+    /// Als er op bereken prijs gedrukt wordt, dan wordt de prijs uitgerekend en de ingevulde waarde weer in de forms gezet.
     if (IsPost)
     {
+        //De sessies van de ingredienten worden of vernieuwd of gevuld door de input form als deze ingevuld is
         if (Request["Personen"] == null) { Session["Personen"] = Session["Personen"]; } else { Session["Personen"] = Request["Personen"]; }
         if (Request["Thema"] == null) { Session["Thema"] = Session["Thema"]; } else { Session["Thema"] = Request["Thema"]; }
         if (Request["Cake"] == null) { Session["Cake"] = Session["Cake"]; } else { Session["Cake"] = Request["Cake"]; }
@@ -24,8 +27,8 @@
         if (Request["Bekleding"] == null) { Session["Bekleding"] = Session["Bekleding"]; } else { Session["Bekleding"] = Request["Bekleding"]; }
         if (Request["Decoratie"] == null) { Session["Decoratie"] = Session["Decoratie"]; } else { Session["Decoratie"] = Request["Decoratie"]; }
         if (Request["Allergieen"] == null) { Session["Allergieen"] = Session["Allergieen"]; } else { Session["Allergieen"] = Request["Allergieen"]; }
-        
 
+        // de variable worden gevuld met of de sessie of wat in de form stond
         personen = Session["Personen"] as string;
         thema = Session["Thema"] as string;
         cake = Session["Cake"] as string;
@@ -33,35 +36,37 @@
         Bekleding = Session["Bekleding"] as string;
         decoratie = Session["Decoratie"] as string;
         allergieen = Session["Allergieen"] as string;
-        
 
+        // variable personen wordt gekopieerd naar een Int en String
         ipersonen = Convert.ToInt32(personen);
         spersonen = personen;
 
-
+        //De prijs van de ingredienten wordt uit de database opgezocht en met deze prijs wordt de uiteindelijke prijs bepaald
         decimal price = 0;
         dynamic prijsthema = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", thema);
         dynamic prijscake = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", cake);
         dynamic prijsvulling = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", vulling);
         dynamic prijsbekleding = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", Bekleding);
         dynamic prijsdecoratie = db.Query("Select Prijs from Ingredienten where IngredientNaam = @0", decoratie);
-        if (thema != "Kies uw thema" && thema != null)
-        {
-            price = Convert.ToDecimal(prijsthema[0].prijs) + Convert.ToDecimal(prijscake[0].prijs) + Convert.ToDecimal(prijsvulling[0].prijs) + Convert.ToDecimal(prijsbekleding[0].prijs) + Convert.ToDecimal(prijsdecoratie[0].prijs);
-            price = price * ipersonen;
-            required = null;
-            hidden = null;
-            sprice = "€" + price.ToString("##.###");
 
-            if (sprice == "€")
-            {
-                sprice = "";
-            }
-            Session["Sprice"] = sprice;
-        }        
+
+        price = Convert.ToDecimal(prijsthema[0].prijs) + Convert.ToDecimal(prijscake[0].prijs) + Convert.ToDecimal(prijsvulling[0].prijs) + Convert.ToDecimal(prijsbekleding[0].prijs) + Convert.ToDecimal(prijsdecoratie[0].prijs);
+        price = price * ipersonen;
+        sprice = "€" + price.ToString("##.###");
+
+        if (sprice == "€")
+        {
+            sprice = "";
+        }
+        Session["Sprice"] = sprice;
+
+        // omdat ze al ingevuld zijn worden sommige input velden niet meer verplicht of hidden
+        required = null;
+        hidden = null;
     }
     else
     {
+        // indien de prijs niet berekend wordt, komen hier de standaard waardes in van de inputvelden
         personen = "Voer het aantal personen in voor de taart";
         thema = "Kies uw thema";
         cake = "Kies het soort cake voor de taart";
@@ -70,6 +75,7 @@
         decoratie = "Kies het niveau van decoratie";
         allergieen = "Kies uw eventuele allergieen";
     }
+    //de hoeveelheid personen wordt vertaald voor de gebruiker
     switch (personen)
     {
         case "15":
