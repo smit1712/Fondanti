@@ -142,6 +142,7 @@
                         <h1>Keuze</h1>
                     </div>
 
+                    <!-- Dit maakt een dropdown menu voor de grootte van de taart, met opties voor het aantal personen. -->
                     <form method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <select class="form-control" id="Grootte" name="Personen" @required>
@@ -152,6 +153,7 @@
                             </select>
                         </div>
 
+                        <!-- Dit maakt een dropdown menu voor het thema van de taart, en als er "anders" gekozen wordt komt er een extra tekst veld bij voor eigen input -->
                         <div class="form-group">
                             <select class="form-control" id="Thema" name="Thema" onchange="mythema()" @required>
                                 <option disabled selected value="@thema">@thema</option>
@@ -176,6 +178,7 @@
                             </script>
                         </div>
 
+                        <!-- Dit maakt een dropdown menu voor het type cake dat gekozen kan worden. -->
                         <div class="form-group">
                             <select class="form-control" id="Soort" name="Cake" @required>
                                 <option disabled selected value="@cake">@cake</option>
@@ -185,6 +188,7 @@
                             </select>
                         </div>
 
+                        <!-- Dit maakt een dropdown menu voor de vullingen die gekozen kunnen worden. -->
                         <div class="form-group">
                             <select class="form-control" name="Vulling" id="Vulling" @required>
                                 <option disabled selected value="@vulling">@vulling</option>
@@ -194,6 +198,7 @@
                             </select>
                         </div>
 
+                        <!-- Dit maakt een dropdown menu voor de types cake die gekozen kunnen worden. -->
                         <div class="form-group">
                             <select class="form-control" name="Bekleding" id="Bekleding" @required>
                                 <option disabled selected value="@Bekleding">@Bekleding</option>
@@ -202,6 +207,7 @@
                             </select>
                         </div>
 
+                        <!-- Dit maakt een dropdown menu voor de decoraties die gekozen kunnen worden. -->
                         <div class="form-group">
                             <select class="form-control" name="Decoratie" id="Decoratie" @required>
                                 <option disabled selected value="@decoratie">@decoratie</option>
@@ -211,6 +217,7 @@
                             </select>
                         </div>
 
+                        <!-- Dit maakt een dropdown menu voor de allergieen die er gekozen kunnen worden, en ook als er hier "anders" gekozen wordt komt er een extra tekst veld bij voor eigen input. -->
                         <div class="form-group">
                             <select class="form-control" id="Allergieen" name="Allergieen" onchange="myallergieen()" @required>
                                 <option disabled selected value="@allergieen">@allergieen</option>
@@ -219,56 +226,62 @@
                                 <option value="Anders">Anders namelijk...</option>
                             </select>
                         </div>
-                            <div id="inputAllergieen" style="display: none">
-                                <input type="text" class="form-control" placeholder="Voer uw allergie in" value="@Request.Form["inputAllergieenForm"]" />
-                            </div>
-                            <script>
-                                function myallergieen() {
-                                    var x = document.getElementById("Allergieen").value;
-                                    if (x == "Anders") {
-                                        inputAllergieen.style.display = "block"
-                                    }
-                                    else {
-                                        inputAllergieen.style.display = "none"
-                                    }
+                        <div id="inputAllergieen" style="display: none">
+                            <input type="text" class="form-control" placeholder="Voer uw allergie in" value="@Request.Form["inputAllergieenForm"]" />
+                        </div>
+                        <script>
+                            function myallergieen() {
+                                var x = document.getElementById("Allergieen").value;
+                                if (x == "Anders") {
+                                    inputAllergieen.style.display = "block"
                                 }
-                            </script>
-                            <div class="row">
-                                <button class="btn btn-primary" id="submit" type="submit" name="submit" onclick="submit()">Bereken Prijs</button>
-                                <div class="col-md-3">
-                                    <div class="price">
-                                        @sprice
+                                else {
+                                    inputAllergieen.style.display = "none"
+                                }
+                            }
+                        </script>
+
+                        <!-- Dit is de bereken knop en gooit alle keuzes van de dropdown menu's bij elkaar en berekent de prijs, en zet dat vervolgens achter het euroteken. -->
+                        <div class="row">
+                            <button class="btn btn-primary" id="submit" type="submit" name="submit" onclick="submit()">Bereken Prijs</button>
+                            <div class="col-md-3">
+                                <div class="price">
+                                    @sprice
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dit maakt een submit-file knop aan met een box er naast waar de gekozen bestandsnaam weergegeven wordt. -->
+                        <fieldset @hidden>
+                            <legend> Taart aanvragen</legend>
+                            <label for="Image">Voeg hier optioneel een voorbeeld foto toe:</label>
+                            <input type="file" name="Image" />
+                        </fieldset>
+
+                        <!-- Hier kan de user een datum selecteren voor wanneer de taart afgeleverd moet worden-->
+                        <div class="form-group" @hidden>
+                            <div class='input-group date' id='datetimepicker2'>
+                                <input type='date' name="DateTime" value="@date" class="form-control" />
+                                <label for="DateTime">Wanneer wilt u de taart afgeleverd hebben?</label>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Met deze knop kan de user zijn/haar keuze submitten naar Fondanti.-->
+                        <div class="form-group">
+                            <div class="container">
+                                <div class="row">
+                                    <div id="myconfirm" @hidden>
+                                        <button class="btn btn-primary ml-auto" type="submit" value="Mail" name="Mail">Mail taart naar Fondanti</button>
                                     </div>
                                 </div>
                             </div>
-                            <fieldset @hidden>
-                                <legend> Taart aanvragen</legend>
-                                <label for="Image">Heeft u een voorbeeld foto?</label>
-                                <input type="file" name="Image" />
-                            </fieldset>
-
-                            <div class="form-group" @hidden>
-                                <div class='input-group date' id='datetimepicker2'>
-                                    <input type='date' name="DateTime" value="@date" class="form-control" />
-                                    <label for="DateTime">Voor wanneer is de taart</label>
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="container">
-                                    <div class="row">
-                                        <div id="myconfirm" @hidden>
-                                            <button class="btn btn-primary ml-auto" type="submit" value="Mail" name="Mail">Mail taart naar Fondanti</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
-                            <script type="text/javascript" src="~/Scripts/GetInput.js"></script>
-                     </form>
+                        </div>
+                        <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+                        <script type="text/javascript" src="~/Scripts/GetInput.js"></script>
+                    </form>
                 </div>
             </div>
         </div>
