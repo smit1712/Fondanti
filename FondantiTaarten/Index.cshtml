@@ -124,9 +124,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="~/Index.css" />
     <!-- Render Shared Header-->
     @RenderPage("~/_Shared/_Header.cshtml")
+    <link rel="stylesheet" href="~/Index.css"/>
 </head>
 <body>
     <!-- Render Shared Navbar-->
@@ -242,11 +242,15 @@
                         </script>
 
                         <!-- Dit is de bereken knop en gooit alle keuzes van de dropdown menu's bij elkaar en berekent de prijs, en zet dat vervolgens achter het euroteken. -->
-                        <div class="row">
-                            <button class="btn btn-primary" id="submit" type="submit" name="submit" onclick="submit()">Bereken Prijs</button>
-                            <div class="col-md-3">
-                                <div class="price">
-                                    @sprice
+                        <div class="form-group">
+                            <div class="container">
+                                <div class="row">
+                                    <button class="btn btn-primary" id="submit" type="submit" name="submit" onclick="submit()">Bereken Prijs</button>
+                                    <div class="col-md-3">
+                                        <div class="price">
+                                            @sprice
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
